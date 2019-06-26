@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "AddUserView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl am-text-xxl">新增用户</div>
+                    </div>
+                    <div class="widget-body am-fr">
+                        <form class="am-form tpl-form-border-form tpl-form-border-br  am-u-lg-7 am-u-md-12">
+                            <div class="am-form-group am-scrollable-horizontal">
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">用户名</span>
+                                        <input id="inp_AddUserName" type="text" class="am-form-field" placeholder="请输入用户名">
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-xl">账   号</span>
+
+                                        <input id="inp_AddUserAccount" type="text" class="am-form-field" placeholder="请输入登入账号">
+
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-xl am-padding-horizontal-md" style="max-height:12px">类&nbsp;型</span>
+
+                                        <select id="sel_addUserRole" data-am-selected="{searchBox: 0}" class="am-form-field am-u-sm-8 mySpanSelect" style="display: none;">
+                                            <option value="1">一般用户</option>
+                                            <option value="0">管理员</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-xl">邮&nbsp;箱</span>
+
+                                        <input id="inp_AddUserEmail" type="text" class="am-form-field" placeholder="请输入邮箱">
+
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-xl">手&nbsp;机</span>
+
+                                        <input id="inp_AddUserPhone" type="text" class="am-form-field" placeholder="请输入手机号码">
+
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div>
+                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success  am-btn-block" onclick="AddUser()">保存</button>
+                                    </div>
+                                </div>
+                             </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function AddUser() {
+        
+        var userName = $("#inp_AddUserName").val();
+        var userAccount = $("#inp_AddUserAccount").val();
+        var userEmail = $("#inp_AddUserEmail").val();
+        var userPhone = $("#inp_AddUserPhone").val();
+        var userRole = $('#sel_addUserRole option:selected').val();      
+         $.ajax({
+               type: "POST",
+                async: false,
+                url: '@Url.Content("~/UserManege/AddUser")',
+                data: { "UserAccount": userAccount, "UserName": userName, "UserEmail": userEmail, "UserPhone": userPhone, "userRole": userRole },
+                success: function (result) {
+                    if (typeof (result.ResultCode) == "undefined") {
+                        //$.ajaxExpand.loadClose();
+                        alert("系统错误,发生了不在预料中的错误！");
+                    }
+                    else if (result.ResultCode == 1) {
+                        alert(result.ResultMsg);   
+                    }
+                    else {
+                        //$.ajaxExpand.loadClose();
+                        alert(result.ResultMsg);                     
+                    }
+                },
+                error: function (error) {
+                    //$.ajaxExpand.loadClose();
+                    $.alert({ mc: "系统错误" });
+                    $(".verifyCode-img").attr("src", "");
+                }
+            });
+
+    }
+    
+</script>

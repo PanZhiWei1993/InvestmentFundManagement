@@ -1,0 +1,608 @@
+﻿
+@{
+    ViewBag.Title = "EditProjectView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using testAmazeUI.Models.resultModel;
+@{ 
+    var ProjectInfo = ViewBag.ProjectInfo as ReProjectInfo;
+    var ProjectPREs = ViewBag.ProjectPRE as List<int?>;
+    var ProjectImgs = ViewBag.ProjectImgs as List<dynamic>;
+    var ReUrl = ViewBag.ReUrl;
+}
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">修改投资项目</div>
+                        <div class="widget-function am-fr">
+                            <a href="javascript:;" class="am-icon-cog"></a>
+                        </div>
+                    </div>
+                    <div class="widget-body am-fr">
+                        <form class="am-form tpl-form-border-form tpl-form-border-br am-u-lg-11 am-u-md-12">
+                            <div class="am-form-group ">
+                                <div class="am-form-group ">
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label am-padding-horizontal-md " style="min-width:114px">项目名称</span>
+                                        <input id="inp_ProName" type="text" class="am-form-field " placeholder="" required>
+                                    </div>
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label am-padding-horizontal-md " style="min-width:114px">公司名称</span>
+                                        <input id="inp_CompName" type="text" class="am-form-field" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label  am-padding-horizontal-md" style="max-height:12px">行业标签</span>
+                                        <select id="selBtn_TradeType" data-am-selected="{searchBox: 0}" class="am-form-field  mySpanSelect" style="display: none;">
+                                            @{Html.RenderAction("GetSelectBtn_TradeType", "Constant"); }
+                                        </select>
+                                    </div>
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label  am-padding-horizontal-md" style="max-height:12px">项目阶段</span>
+                                        <select id="selBtn_ProPhaseId" data-am-selected="{searchBox: 0}" class="am-form-field am-u-sm-8 mySpanSelect" style="display: none;">
+                                            @{Html.RenderAction("GetSelectBtn_PjRank", "Constant");}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label   am-padding-horizontal-md" style="max-height:12px">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区</span>
+                                        <select id="selBtn_AreaId" data-am-selected="{searchBox: 0}" class="am-form-field am-u-sm-8 mySpanSelect" style="display: none;">
+                                            @{Html.RenderAction("GetSelectBtn_AreaList", "Constant"); }
+                                        </select>
+                                    </div>
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label   am-padding-horizontal-md" style="max-height:12px">项目主管</span>
+                                        <select id="selBtn_ProManager" data-am-selected="{searchBox: 0}" class="am-form-field am-u-sm-8 mySpanSelect" style="display: none;">
+                                            @{Html.RenderAction("GetSelectBtn_UserManege", "Constant");}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group  am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label   am-padding-horizontal-md" style="max-height:12px">项目类型</span>
+                                        <select id="selBtn_ProType" data-am-selected="{searchBox: 0}" class="am-form-field am-u-sm-8 mySpanSelect" style="display: none;">
+                                            @{Html.RenderAction("GetSelectBtn_PjType", "Constant");}
+                                        </select>
+                                    </div>
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label  ">微信公号</span>
+                                        <input id="inp_ProWeChat" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group  am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label  ">投资金额</span>
+                                        <input id="inp_InvestmentAmount" type="number" class="am-form-field" placeholder="">
+                                    </div>
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label  ">融资规模</span>
+                                        <input id="inp_FinancingScale" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label  ">项目网站</span>
+                                        <input id="inp_ProWebUrl" type="url" class="am-form-field" placeholder="">
+                                    </div>
+                                    <div class="am-input-group am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                        <span class="am-input-group-label  ">项目app</span>
+                                        <input id="inp_ProApp" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group ">
+                                    <div class="am-input-group am-u-lg-4 am-u-md-3 am-u-sm-6">
+                                        <span class="am-input-group-label ">创&nbsp;始&nbsp;人</span>
+                                        <input id="inp_Originator" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                    <div class="am-input-group am-u-lg-4 am-u-md-3 am-u-sm-6">
+                                        <span class="am-input-group-label ">创始人邮箱</span>
+                                        <input id="inp_OriginatorEmail" type="email" class="am-form-field" placeholder="">
+                                    </div>
+                                    <div class="am-input-group am-u-lg-4 am-u-md-3 am-u-sm-6">
+                                        <span class="am-input-group-label ">创始人手机</span>
+                                        <input id="inp_OriginatorPhone" type="number" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-input-group am-u-lg-4 am-u-md-3 am-u-sm-6">
+                                        <span class="am-input-group-label ">联&nbsp;系&nbsp;人</span>
+                                        <input id="inp_Contact" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                    <div class="am-input-group am-u-lg-4 am-u-md-3 am-u-sm-6">
+                                        <span class="am-input-group-label">联系人邮箱</span>
+                                        <input id="inp_ContactEmail" type="email" class="am-form-field" placeholder="">
+                                    </div>
+                                    <div class="am-input-group am-u-lg-4 am-u-md-3 am-u-sm-6">
+                                        <span class="am-input-group-label">联系人手机</span>
+                                        <input id="inp_ContactPhone" type="number" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="am-form-group ">
+                                    <div class="am-panel-group am-u-lg-12 am-u-md-12 am-u-sm-12" id="accordion">
+                                        <div class="am-panel am-panel-default am-panel-secondary">
+                                            <div class="am-panel-hd">
+                                                <h4 class="am-panel-title" data-am-collapse="{target: '#do-not-say-3'}">
+                                                    Pre-DD CheckList
+                                                </h4>
+                                            </div>
+                                            <div id="do-not-say-3" class="am-panel-collapse am-collapse am-in">
+                                                <div class="am-panel-bd">
+                                                    <ul class="am-avg-sm-4">
+                                                        @{Html.RenderAction("GetCheckBoxs_PRE", "Constant",new { ProjectPREs= ProjectPREs } );}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="am-panel am-panel-default">
+                                            <div class="am-panel-hd">
+                                                <h4 class="am-panel-title" data-am-collapse="{ target: '#do-not-say-1'}">
+                                                    项目简介
+                                                </h4>
+                                            </div>
+                                            <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+                                                <textarea class="" rows="5" id="txr_ProBrief"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="am-panel am-panel-default">
+                                            <div class="am-panel-hd">
+                                                <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-2'}">
+                                                    投资逻辑
+                                                </h4>
+                                            </div>
+                                            <div id="do-not-say-2" class="am-panel-collapse am-collapse am-in">
+                                                <textarea class="" rows="5" id="txr_InvestmentLogic"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="am-panel am-panel-default">
+                                            <div class="am-panel-hd">
+                                                <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-9'}">
+                                                    添加图片
+                                                </h4>
+                                            </div>
+                                            <div id="do-not-say-9" class="am-panel-collapse am-collapse am-in">
+                                                <ul id="proImgList" data-am-widget="gallery"
+                                                    class="am-gallery am-avg-sm-2 am-avg-md-4 am-avg-lg-5 am-gallery-overlay
+                                                    am-thumbnails myThumbnails" data-am-gallery="{ pureview: true }" style="padding-bottom:20px">
+
+                                                    @{
+                                                        if (ProjectImgs != null)
+                                                        {
+                                                            foreach (var item in ProjectImgs)
+                                                            {
+                                                                <li class="normalLi" data-id="@item.Id" data-imgId="@item.imgId">
+                                                                    <div class="am-gallery-item">
+                                                                        <a href="@item.FilePath" class="">
+                                                                            <sapn class="am-gallery-title" style="bottom:initial"><i class="am-icon-close am-fr am-icon-md" style="margin-right:5px;color:#ff0000"></i></sapn>
+                                                                            <img style="width:160px;height:120px" src="@item.FilePath" alt="" />
+
+                                                                          
+                                                                        </a>
+                                                                    </div>
+
+
+                                                                    @*<img style="width:160px;height:120px" class="am-thumbnail" src="@item.FilePath" />*@
+                                                                </li>
+                                                            }
+                                                        }
+                                                    }
+                                                    <li id="btn_AddProjectImg"><div class="am-thumbnail"> <button type="button" class="am-btn " style="width:100%;height:100%"><i class="am-icon-plus am-icon-lg" style="width:100%;height:100%"></i></button></div></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <div class="am-panel-group am-u-lg-12 am-u-md-12 am-u-sm-12" id="accordion2">
+                                        <div class="am-panel am-panel-default">
+                                            <div class="am-panel-hd am-cf" data-am-collapse="{target: '#do-not-say-5'}">
+                                                <span class="am-u-sm-9 am-u-md-9 am-u-lg-6" style="font-size:20px;font-weight:600">访谈纪要</span>
+                                                <button id="btn_addProTxt" type="button" class="am-fr am-u-sm-3 am-u-md-3 am-u-lg-2 am-btn am-btn-primary am-radius">添加访谈纪要</button>
+                                            </div>
+                                            <div id="do-not-say-5" class="am-panel-collapse am-collapse am-in">
+                                                <div class="am-panel-hd am-scrollable-horizontal">
+                                                    <table style="width:100%" class="am-table am-table-compact am-table-striped tpl-table-black am-table-hover am-text-nowrap" id="tb_projectTxt">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>序号</th>
+                                                                <th data-bind="Subject">主题</th>
+                                                                <th data-bind="Area">地点</th>
+                                                                <th data-bind="InnerMan">内部人员</th>
+                                                                <th data-bind="OuterMan">外部人员</th>
+                                                                <th data-bind="Content">内容</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="am-panel am-panel-default">
+                                            <div class="am-panel-hd am-cf" data-am-collapse="{target:'#do-not-say-7'}">
+                                                <span class="am-u-sm-9 am-u-md-9 am-u-lg-6" style="font-size:20px;font-weight:600">项目文档</span>
+                                                <button type="button" class="am-fr am-u-sm-3 am-u-md-3 am-u-lg-2 am-btn am-btn-primary  am-radius" id="btn_addProFile">添加项目文档</button>
+                                            </div>
+                                            <div id="do-not-say-7" class="am-panel-collapse am-collapse am-in">
+                                                <div class="am-panel-bd am-scrollable-horizontal">
+                                                    <table style="width:100%" class="am-table am-table-compact am-table-striped tpl-table-black am-table-hover am-text-nowrap" id="tb_projectDocment">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>序号</th>
+                                                                <th data-bind="DocmentTypeName">文件类型</th>
+                                                                <th data-bind="FileDesc">文件描述</th>
+                                                                <th data-bind="ProPhaseName">项目阶段</th>
+                                                                <th data-bind="InsertTime">添加时间</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-form-group">
+                                    <div class="am-u-lg-12">
+                                        <button id="btn_UpdateProject" type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success  am-btn-block">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*项目初始化相关*@
+<script>
+    var projectFileModel = GetNewProjectFileModel();
+    var projectTxteModel = GetNewProjectTxteModel();
+    var projectModel = GetNewProjectModel();
+    $(function () {
+        $("#btn_addProTxt").click(function (e) {
+            $("#inp_mod_Subject").val("");
+            $("#inp_mod_Area").val("");
+            $("#inp_mod_InnerMan").val("");
+            $("#inp_mod_OuterMan").val("");
+            $("#inp_mod_Content").val("");
+            $('#modal_addProjectTxte').modal({
+                closeViaDimmer: false,
+                onConfirm: function (options) {
+                    SaveProjectTxteModel();
+                }
+            });
+            return false;
+        });
+        $("#btn_addProFile").click(function (e) {
+            ProjectFileModelOpen("", projectModel.Id);
+            return false;
+        });
+        $("#btn_UpdateProject").click(function () {
+            var FilesCount = proImgUp.getFiles();
+            if (FilesCount.length > 0) {
+                proImgUp.upload();
+            } else {
+                SaveProjectModel();
+            }
+        });
+        ProjectIntil();
+
+    });
+    function ProjectIntil() {
+        if ("@ProjectInfo.Id"!= "") {
+            debugger;
+            //projectModel = $.extend({}, projectModel,@ProjectInfo);
+            projectModel.Id = "@ProjectInfo.Id";
+            $("#inp_CompName").val("@ProjectInfo.CompName");
+            $("#selBtn_ProPhaseId").val("@ProjectInfo.ProPhaseId");
+            $("#selBtn_AreaId").val("@ProjectInfo.AreaId");
+            $("#selBtn_ProManager").val("@ProjectInfo.ProManager");
+            $("#inp_ProWebUrl").val("@ProjectInfo.ProWebUrl");
+            $("#inp_ProApp").val("@ProjectInfo.ProApp");
+            $("#inp_ProWeChat").val("@ProjectInfo.ProWeChat");
+            $("#inp_Originator").val("@ProjectInfo.Originator");
+            $("#inp_OriginatorEmail").val("@ProjectInfo.OriginatorEmail");
+            $("#inp_OriginatorPhone").val("@ProjectInfo.OriginatorPhone");
+            $("#inp_Contact").val("@ProjectInfo.Contact");
+            $("#inp_ContactEmail").val("@ProjectInfo.ContactEmail");
+            $("#inp_ContactPhone").val("@ProjectInfo.ContactPhone");
+            $("#inp_InvestmentAmount").val("@ProjectInfo.InvestmentAmount");
+            $("#inp_FinancingScale").val("@ProjectInfo.FinancingScale");
+            $("#inp_ProName").val("@ProjectInfo.ProName");
+            $("#txr_ProBrief").val("@ProjectInfo.ProBrief");
+            $("#txr_InvestmentLogic").val("@ProjectInfo.InvestmentLogic");
+            BindProjectDocmentTable(projectModel.Id);
+            BindProjectTxtTable(projectModel.Id);
+        }
+        else {
+            alert("无效数据！");
+            window.location.href = "@ReUrl";
+        }
+    }
+</script>
+@*项目信息页相关*@
+<script>           
+        //保存项目信息
+        function SaveProjectModel() {
+            debugger;
+            projectModel.CompName = $("#inp_CompName").val();
+            projectModel.ProPhaseId = $("#selBtn_ProPhaseId").val();
+            projectModel.AreaId = $("#selBtn_AreaId").val();
+            projectModel.ProManager = $("#selBtn_ProManager").val();
+            projectModel.ProWebUrl = $("#inp_ProWebUrl").val();
+            projectModel.ProApp = $("#inp_ProApp").val();
+            projectModel.ProWeChat = $("#inp_ProWeChat").val();
+            projectModel.Originator = $("#inp_Originator").val();
+            projectModel.OriginatorEmail = $("#inp_OriginatorEmail").val();
+            projectModel.OriginatorPhone = $("#inp_OriginatorPhone").val();
+            projectModel.Contact = $("#inp_Contact").val();
+            projectModel.ContactEmail = $("#inp_ContactEmail").val();
+            projectModel.ContactPhone = $("#inp_ContactPhone").val();
+            projectModel.InvestmentAmount = $("#inp_InvestmentAmount").val();
+            projectModel.FinancingScale = $("#inp_FinancingScale").val();
+            projectModel.ProName = $("#inp_ProName").val();
+            projectModel.ProBrief = $("#txr_ProBrief").val();
+            projectModel.InvestmentLogic = $("#txr_InvestmentLogic").val();
+
+            $.each($(".checkPRE:checked"), function () {
+                projectModel.ProPREs.push($(this).val());
+            });
+
+            $.ajaxPost({
+                    url: '@Url.Content("~/ProjectManege/EditProjectInfo")',
+                    data: projectModel,
+                    success: function (result) {
+                        debugger;
+                        alert("修改成功！");
+                       window.location.href = "@ReUrl";
+                    }
+                });
+    };
+     //绑定项目文档列表
+          function BindProjectDocmentTable(ProId) {
+           var TBcolumns = GetTableTh("tb_projectDocment");
+           $.ajaxPost({
+            url: '@Url.Content("~/ProjectManege/SelProjectDocmentList")',
+               data: {
+                   "ProId": ProId, "TBcolumns": TBcolumns, actionID: "Id", doEitFunction: "",
+                   doDelFunction: "DelProjectDocment", isHasAction: true
+               },
+               success: function (result) {
+                   debugger;
+                   $('#tb_projectDocment>tbody').html(result.data);
+            }
+        });
+    };
+    //绑定访谈纪要
+        function BindProjectTxtTable(ProId) {
+            var TBcolumns = GetTableTh("tb_projectTxt");
+           $.ajaxPost({
+            url: '@Url.Content("~/ProjectManege/SelProjectTxtList")',
+               data: {
+                   "ProId": ProId, "TBcolumns": TBcolumns, actionID: "Id", doEitFunction: "",
+                   doDelFunction: "DelProjectTxt", isHasAction: true
+               },
+               success: function (result) {
+                   debugger;
+                   $('#tb_projectTxt>tbody').html(result.data);
+            }
+        });
+    }
+    //删除项目文档
+    function DelProjectDocment(pdID) {
+            $.ajaxPost({
+                url: '@Url.Content("~/ProjectManege/DelProjectDocment")',
+                data: { pdID: pdID},
+                    success: function (result) {
+                        alert("删除成功！");
+                        BindProjectDocmentTable(projectModel.Id);
+                    }
+                });
+    };
+    //删除访谈纪要
+    function DelProjectTxt(ptID) {
+            $.ajaxPost({
+                url: '@Url.Content("~/ProjectManege/DelProjectTxt")',
+                data: { ptID: ptID},
+                    success: function (result) {
+                        alert("删除成功！");
+                        BindProjectTxtTable(projectModel.Id);
+                    }
+                });
+    };
+ </script>
+@*模态框相关*@
+<script>
+    
+     //打开项目文档模态框
+        var ProjectFileModelOpen = function (Id, ProID) {
+            debugger;
+            projectFileModel = GetNewProjectFileModel();
+
+                if (typeof (Id) != "undefined" && Id != "") {
+                    $.ajaxPost({
+                        url: '@Url.Content("~/ProjectManege/SelProjectFileById")',
+                        data: { Id: Id },
+                        success: function (result) {
+                            debugger;
+                            projectFileModel = $.extend({}, projectFileModel, result);
+                        }
+                    });
+                }
+                $('#selBtn_moP_PjTextType').prop('selectedIndex', 0);
+                $('#selBtn_moP_PjRank').prop('selectedIndex', 0);
+            $('#inp_moP_FileDesc').val(projectFileModel.FileDesc);
+            $("#inp_ProFlieName").val("");
+
+            $('#modal_addProjectFile').modal({
+                    closeViaDimmer: false,
+                    onConfirm: function (options) {
+                        proFileUp.upload();
+                    }
+            });
+            //使上传按钮可以正常使用
+            proFileUp.refresh();
+        };
+           //保存项目文档信息
+        var projectFileModalSave = function () {
+                debugger;
+                projectFileModel.DocmentTypeId= $('#selBtn_moP_PjTextType').val();
+                projectFileModel.ProPhaseId= $('#selBtn_moP_PjRank').val();
+                projectFileModel.FileDesc = $('#inp_moP_FileDesc').val();
+                projectFileModel.ProId = projectModel.Id;
+                $.ajaxPost({
+                    url: '@Url.Content("~/ProjectManege/SaveProjectDocment")',
+                    data: projectFileModel,
+                    success: function (result) {
+                        debugger;
+                        projectFileModel = $.extend({}, projectFileModel, result);
+                        if (projectModel.Id == "") {
+                            projectModel.Id = result.ProId;
+                        }
+                        BindProjectDocmentTable(projectModel.Id);
+                    }
+                });
+           };
+      //保存访谈纪要
+        function SaveProjectTxteModel() {
+            projectTxteModel.Subject = $("#inp_mod_Subject").val();
+            projectTxteModel.Area = $("#inp_mod_Area").val();
+            projectTxteModel.SortTime = $("#inp_mod_SortTime").val();
+            projectTxteModel.InnerMan = $("#inp_mod_InnerMan").val();
+            projectTxteModel.OuterMan = $("#inp_mod_OuterMan").val();
+            projectTxteModel.Content = $("#inp_mod_Content").val();
+            projectTxteModel.ProId = projectModel.Id;
+            $.ajaxPost({
+                    url: '@Url.Content("~/ProjectManege/SaveProjectTxtModel")',
+                    data: projectTxteModel,
+                    success: function (result) {
+                        debugger;
+                        projectTxteModel = $.extend({}, projectTxteModel, result);
+                        if (projectModel.Id == "") {
+                            projectModel.Id = result.ProId;
+                        }
+                        BindProjectTxtTable(projectModel.Id);
+                    }
+                });
+
+        }
+        
+</script>
+@*初始化上传图片控件*@
+<script>
+        var proImgUp = WebUploader.create({
+            swf: '@Url.Content("~/WebUploader/Uploader.swf")',
+            // 文件接收服务端。
+            server: '@Url.Content("~/Upload/UpLoadProcess")',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#btn_AddProjectImg',
+            formData: {
+                UpType: "ProImg"
+            },
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }, duplicate: true
+        });
+        // 当有文件添加进来的时候
+        proImgUp.on('fileQueued', function (file) {
+            var $li = $(
+                '<li class="normalLi" id="' + file.id + '"><img style="width:160px;height:120px" class="am-thumbnail"/></li>'
+            ),
+            $img = $li.find('img');
+            // $list为容器jQuery实例
+            $("#btn_AddProjectImg").before($li);
+
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            proImgUp.makeThumb(file, function (error, src) {
+                if (error) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr('src', src);
+            }, 400, 300);
+        });
+        // 文件上传过程中创建进度条实时显示。
+        proImgUp.on('uploadProgress', function (file, percentage) {
+
+        });
+        // 文件上传成功。
+        proImgUp.on('uploadSuccess', function (file, response) {
+            debugger;
+            projectModel.ProImgs.push(response.FileId);
+        });
+        // 文件上传失败，显示上传出错。
+        proImgUp.on('uploadError', function (file) {
+            alert("上传失败，请重新添加");
+            uploader.stop();
+
+        });
+        // 完成上传完了，成功或者失败，先删除进度条。
+        proImgUp.on('uploadComplete', function (file) {
+            debugger;
+            var stats = proImgUp.getStats();
+            if (stats.uploadFailNum <= 0) {
+                if ((stats.progressNum + stats.queueNum) <= 0) {
+                    SaveProjectModel();
+                    proImgUp.reset();
+                }
+            }
+            else {
+                proImgUp.reset();
+            }
+
+        });
+</script>
+@*初始化上传文件控件*@
+<script>
+        var proFileUp = WebUploader.create({
+            swf: '@Url.Content("~/WebUploader/Uploader.swf")',
+            // 文件接收服务端。
+            server: '@Url.Content("~/Upload/UpLoadProcess")',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: { id: '#btn_moP_FileUp', innerHTML :"浏览"},
+            formData: {
+                UpType: "ProFile"
+            }
+
+        });
+        // 当有文件添加进来的时候
+        proFileUp.on('fileQueued', function (file) {
+            $("#inp_ProFlieName").val(file.name);
+        });
+        // 文件上传过程中创建进度条实时显示。
+        proFileUp.on('uploadProgress', function (file, percentage) {
+
+        });
+        // 文件上传成功。
+        proFileUp.on('uploadSuccess', function (file, response) {
+            debugger;
+            projectFileModel.FileId = response.FileId;
+            projectFileModalSave();
+        });
+        // 文件上传失败，显示上传出错。
+        proFileUp.on('uploadError', function (file) {
+            alert("上传失败，请重新添加");
+            proFileUp.stop();
+
+        });
+        // 完成上传完了，成功或者失败，先删除进度条。
+        proFileUp.on('uploadComplete', function (file) {
+            proFileUp.reset();
+        });
+</script>

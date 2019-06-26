@@ -1,0 +1,20 @@
+﻿@using testAmazeUI.Models;
+
+@{
+    var myModel = Model as CheckBoxModel;
+    if (myModel != null)
+    {        
+        foreach (var item in myModel.CheckBoxsList)
+        {
+            if (myModel.HasCheckList.Contains(Convert.ToInt32(item.Value)))
+            {
+                <li> <div class="am-checkbox am-danger" style="padding-top:0px"><label><input class="checkPRE" type="checkbox" value="@item.Value" data-am-ucheck checked> @item.Name</label></div></li>
+            }
+            else
+            {
+                <li> <div class="am-checkbox am-danger" style="padding-top:0px"><label><input class="checkPRE" type="checkbox" value="@item.Value" data-am-ucheck>@item.Name</label></div></li>
+            }
+
+        }
+    }
+}

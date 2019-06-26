@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "NoticeDetailedView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using testAmazeUI.Models.resultModel;
+@{
+    var noticeInfo = ViewBag.NoticeInfo as ReNoticeInfo;
+
+
+}
+<style type="text/css">
+    .myrow-title {
+        border-right: 1px solid #808080;
+        border-left: 1px solid #808080;
+        background-color: #ededed;
+    }
+
+    .myrow-content {
+        padding-left: 10px;
+    }
+
+    .td-title {
+        width: 15%;
+        background-color: #ededed;
+    }
+
+    .td-content {
+        width: 30%;
+    }
+</style>
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf am-g">
+                        <h1 style="font-size:25px">
+                            <span class="am-icon-home am-icon-sm"> </span>
+                            <span style="font-size:25px;padding:10px 0 0 15px"> 投资人公告</span>
+                        </h1>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <form class="am-form am-form-horizontal">
+                            <div class="am-form-group">
+                                <table class="am-table am-table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td class="td-title">主题:</td>
+                                            <td class="td-content">@noticeInfo.NTheme</td>
+                                            <td class="td-title">公告序号:</td>
+                                            <td class="td-content">@noticeInfo.NoticeNO</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="td-title">日期:</td>
+                                            <td class="td-content">@noticeInfo.NDate.ToString()</td>
+                                            <td class="td-title">地点:</td>
+                                            <td class="td-content">@noticeInfo.Area</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="td-title">联系人员:</td>
+                                            <td class="td-content">@noticeInfo.ContactAccount</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-form-group">
+                                <table style="width:100%" class="am-table am-table-compact am-table-striped tpl-table-black am-table-hover am-text-nowrap" id="tb_noticeDocment">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th data-bind="FileSName">文件名称</th>
+                                            <th data-bind="FileDesc">文件描述</th>
+                                            <th data-bind="FileType">文件类型</th>
+                                            <th data-bind="FileSize">大小</th>
+                                            <th data-bind="InsertDate">更新日期</th>
+                                            <th data-bind="UserName">操作人</th>
+                                            <th>下载</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>ceshi</td>
+                                            <td>ceshi</td>
+                                            <td>ceshi</td>
+                                            <td>ceshi</td>
+                                            <td>ceshi</td>
+                                            <td>ceshi</td>
+                                            <td>
+                                                <div class="tpl-table-black-operation">
+                                                    <a href="~/Upload/201806/txt/3d01d57b51644bd5acb79c884c0f95c2.txt">
+                                                        <i class="am-icon-cloud-download"></i> 下载
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-panel am-panel-default">
+                                    <div class="am-panel-hd">
+                                        <h4 class="am-panel-title" data-am-collapse="{ target: '#ProDecment-1'}">
+                                            <i class="am-icon-file-word-o am-icon-md" style="width:30px;height:30px;margin-right:10px"></i>内容
+                                        </h4>
+                                    </div>
+                                    <div id="ProDecment-1" class="am-panel-collapse am-collapse am-in" style="padding:15px">
+
+                                        <div class="am-form-group" style="margin-bottom:0px">
+                                            <pre>@noticeInfo.Content</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        BindNoticeDocmentTable('@noticeInfo.Id');
+    });
+  function BindNoticeDocmentTable(noticeId) {
+           var TBcolumns = GetTableTh("tb_noticeDocment");
+           $.ajaxPost({
+            url: '@Url.Content("~/Notice/SelNoticeDocmentDownList")',
+               data: {
+                   "NoticeId": noticeId, "TBcolumns": TBcolumns, actionID: "Id", doEitFunction: "",
+                   doDelFunction: "DelNoticeDocment","PageSize":100
+               },
+            success: function (result) {
+                $('#tb_noticeDocment>tbody').html(result.data);
+            }
+        });
+    }
+</script>

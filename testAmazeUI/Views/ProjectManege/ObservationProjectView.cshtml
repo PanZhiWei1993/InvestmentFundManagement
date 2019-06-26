@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "ObservationProjectView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf am-g">
+                        <h1 style="font-size:25px">
+                            <span class="am-icon-home am-icon-lg"></span>
+                            <span style="font-size:35px;padding:10px 0 0 15px">观察项目</span>
+                        </h1>
+                    </div>
+                    <div class="widget-body  am-fr">
+
+                        <div class="moreSleArea am-u-sm-12 am-u-md-12 am-u-lg-12 hide" style="padding:0px">
+                            <div class="am-u-sm-12 am-u-md-4 am-u-lg-2">
+                                <div class="am-input-group am-input-group-md tpl-form-border-form cl-p">
+                                    <input id="txtStarTime" type="text" class="am-form-field" placeholder="开始时间" data-am-datepicker="" value="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")" readonly="" />
+                                    <span class="am-input-group-label" style="padding:0 4px 0 4px">
+                                        <i class="am-icon-th am-icon-fw"></i>  至
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="am-u-sm-12 am-u-md-4 am-u-lg-2">
+                                <div class="am-input-group am-input-group-md tpl-form-border-form cl-p">
+                                    <input id="txtEndTime" type="text" class="am-form-field" placeholder="结束时间" data-am-datepicker="" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly="" />
+                                    <span class="am-input-group-label">
+                                        <i class="am-icon-th am-icon-fw"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="am-u-sm-6 am-u-md-3 am-u-lg-2">
+                                <div class="am-form-group tpl-table-list-select">
+                                    <select id="selBtn_TradeType" data-am-selected="{btnSize: 'md'}" class="am-form-field  mySpanSelect" style="display: none;">
+                                        <option value=" ">全部行业</option>
+                                        @{Html.RenderAction("GetSelectBtn_TradeType", "Constant"); }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-6 am-u-md-3 am-u-lg-2">
+                                <div class="am-form-group tpl-table-list-select">
+                                    <select id="selBtn_ProPhase" data-am-selected="{btnSize: 'md'}" class="am-form-field  mySpanSelect" style="display: none;">
+                                        <option value=" ">全部阶段</option>
+                                        @{Html.RenderAction("GetSelectBtn_PjRank", "Constant");}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-6 am-u-md-3 am-u-lg-2">
+                                <div class="am-form-group tpl-table-list-select">
+                                    <select id="selBtn_Area" data-am-selected="{btnSize: 'md'}" class="am-form-field  mySpanSelect" style="display: none;">
+                                        <option value=" ">全部地区</option>
+                                        @{Html.RenderAction("GetSelectBtn_AreaList", "Constant"); }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-6 am-u-md-3 am-u-lg-2">
+                                <div class="am-form-group tpl-table-list-select">
+                                    <select id="selBtn_PjManege" data-am-selected="{btnSize: 'md'}" class="am-form-field  mySpanSelect" style="display: none;">
+                                        <option value=" ">项目主管</option>
+                                        @{Html.RenderAction("GetSelectBtn_UserManege", "Constant");}
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                            <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                                <input id="txtKeyWord" type="text" placeholder="项目搜索" class="am-form-field ">
+                                <span class="am-input-group-btn">
+                                    <button class="am-btn  am-btn-default tpl-table-list-field am-icon-search" type="button"></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="am-u-sm-6 am-u-md-3 am-u-lg-3">
+                            <div class="am-form-group tpl-table-list-select">
+                                <select id="selBtn_PjType" data-am-selected="{btnSize: 'lg'}" class="am-form-field  mySpanSelect" style="display: none;">
+                                    <option value=" ">全部类型</option>
+                                    @{Html.RenderAction("GetSelectBtn_PjType", "Constant");}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-6 am-u-lg-5">
+                            <a class="selMore" href="javascript:void(0)">
+                                <span class="am-icon-toggle-off"></span>
+                                <span style="color:#d48a14;padding-right:30px">更多</span>
+                            </a>
+                            <button id="btn_SelProjectList" type="button" style="min-width:200px" class="am-btn am-btn-default am-radius am-btm-lg">查询</button>
+                        </div>
+
+                        <div class="am-u-sm-12">
+                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black am-table-hover" id="tb_ProList">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th data-bind="CompName">项目名称</th>
+                                        <th data-bind="AreaName">地点</th>
+                                        <th data-bind="-1">项目来源</th>
+                                        <th data-bind="ProPhase">项目阶段</th>
+                                        <th data-bind="-1">GP/VP</th>
+                                        <th data-bind="UserName">项目主管</th>
+                                        <th data-bind="InvestmentAmount">投资金额</th>
+                                        <th data-bind="ValueOfAssessment">分值</th>
+                                        <th data-bind="-1">BP</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div id="pl_ProjectList" class="am-u-lg-12 am-cf">
+
+                            <div class="am-fr">
+                                <ul class="am-pagination tpl-pagination">
+                                    <li class="am-disabled"><a href="#">«</a></li>
+                                    <li class="am-active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        BindTBProjectList({ PageIndex: 1 });
+        $("#btn_SelProjectList").click(function () {
+            BindTBProjectList({ PageIndex: 1 });
+        });
+    });
+    var query = {
+        BeginTime: "",
+        EndTime: "",
+        KeyWord: "",
+        ProPhaseId: "",
+        AreaId: "",
+        ProManager: "",
+        ProType: "",
+        TBcolumns: "",
+        PageIndex: 1,
+        PageSize: 5
+    }
+    var BindTBProjectList = function (options){
+         query.BeginTime = $("#txtStarTime").val();
+        query.EndTime = $("#txtEndTime").val();
+        query.KeyWord = $("#txtKeyWord").val().trim();
+        query.ProPhaseId = $("#selBtn_ProPhase").val().trim();
+        query.AreaId = $("#selBtn_Area").val().trim();
+        query.ProManager = $("#selBtn_PjManege").val().trim();
+        query.ProType = $("#selBtn_PjType").val().trim();
+       query.TBcolumns = GetTableTh("tb_ProList");
+       var pageOpt = $.extend($.defaultsPage, options);
+        query.PageIndex = pageOpt.PageIndex,
+       query.PageSize = pageOpt.PageSize ,
+        pageOpt.ID = "pl_ProjectList";
+        pageOpt.ClickFun = "BindTBProjectList";
+        $.ajaxPost({
+            url: '@Url.Content("~/ProjectManege/SelProjectListTable")',
+            data: query,
+            success: function (result) {
+                $('#tb_ProList>tbody').html(result.data);
+
+                pageOpt = $.extend(pageOpt, result.pageInfo);
+                $.BindPageList(pageOpt);
+            }
+        });
+    }
+</script>
+

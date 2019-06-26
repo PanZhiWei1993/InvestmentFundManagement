@@ -1,0 +1,48 @@
+﻿
+@using testAmazeUI.Models;
+@{
+    if (Model.data != null)
+    {
+
+        var i = 0;
+        bool hasAction = Model.isHasAction;
+        string doEitFunction = Model.doEitFunction;
+        string doDelFuntion = Model.doEitFunction;
+        string actionIDValue = "";
+        foreach (var item in Model.data)
+        {
+            i++;
+            <tr>
+                <td>@i</td>
+                @{
+                    var NowData = (IDictionary<string, object>)item;
+                    foreach (var couName in Model.TBcolumns)
+                    {
+                        try
+                        {
+                            <td class="am-text-truncate" style="max-width:300px">@NowData[couName]</td>
+                        }
+                        catch (Exception ex)
+                        {
+
+                            continue;
+                        }
+                    }                   
+                     actionIDValue = NowData[Model.actionID];
+                        <td>
+                            <div class="tpl-table-black-operation">
+                                <a href="@NowData["FilePath"]" download="@NowData["FileSName"]">
+                                    <i class="am-icon-cloud-download"></i> 下载
+                                </a>                               
+                            </div>
+                        </td>
+                  
+                }
+            </tr>
+        }
+
+    }
+}
+
+
+

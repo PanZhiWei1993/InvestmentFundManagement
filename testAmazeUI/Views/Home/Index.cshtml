@@ -1,0 +1,391 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style type="text/css">
+    .widget-brown {
+        min-height: 174px;
+        border: 1px solid #A47000;
+        border-top: 2px solid #A47000;
+        background: #ba8410 !important;
+        color: #ffffff !important;
+        padding: 12px 17px;
+        padding-left: 22px;
+    }
+
+    .am-panel-brown {
+        color: #fff;
+        background-color: #e0a424;
+        border-color: #a37004;
+    }
+
+    .am-panel-violet {
+        color: #fff;
+        background-color: #a981dc;
+        border-color: #691993;
+    }
+</style>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+    @*<div class="container-fluid am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                    <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 部件首页 <small>Amaze UI</small></div>
+                    <p class="page-header-description">Amaze UI 含近 20 个 CSS 组件、20 余 JS 组件，更有多个包含不同主题的 Web 组件。</p>
+                </div>
+                <div class="am-u-lg-3 tpl-index-settings-button">
+                    <button type="button" class="page-header-button"><span class="am-icon-paint-brush"></span> 设置</button>
+                </div>
+            </div>
+        </div>*@
+    <div class="row-content am-cf">
+        <div class="row  am-cf">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+                <div class="widget widget-brown  am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-fl">月度财务收支计划</div>
+                        <div class="widget-function am-fr">
+                            <a href="javascript:;" class="am-icon-cog"></a>
+                        </div>
+                    </div>
+                    <div class="widget-body am-fr">
+                        <div class="am-fl">
+                            <div class="widget-fluctuation-period-text">
+                                ￥61746.45
+                                <button class="widget-fluctuation-tpl-btn">
+                                    <i class="am-icon-calendar"></i>
+                                    更多月份
+                                </button>
+                            </div>
+                        </div>
+                        <div class="am-fr am-cf">
+                            <div class="widget-fluctuation-description-amount text-success" am-cf>
+                                +￥30420.56
+
+                            </div>
+                            <div class="widget-fluctuation-description-text am-text-right">
+                                8月份收入
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                <div class="widget widget-primary am-cf">
+                    <div class="widget-statistic-header">
+                        本季度利润
+                    </div>
+                    <div class="widget-statistic-body">
+                        <div class="widget-statistic-value">
+                            ￥27,294
+                        </div>
+                        <div class="widget-statistic-description">
+                            本季度比去年多收入 <strong>2593元</strong> 人民币
+                        </div>
+                        <span class="widget-statistic-icon am-icon-credit-card-alt"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                <div class="widget widget-purple am-cf">
+                    <div class="widget-statistic-header">
+                        本季度利润
+                    </div>
+                    <div class="widget-statistic-body">
+                        <div class="widget-statistic-value">
+                            ￥27,294
+                        </div>
+                        <div class="widget-statistic-description">
+                            本季度比去年多收入 <strong>2593元</strong> 人民币
+                        </div>
+                        <span class="widget-statistic-icon am-icon-support"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row am-cf">
+            <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                <div class="am-panel am-panel-brown">
+                    <div class="am-panel-hd">
+                        <a href="@Url.Content("/Notice/Index")" class="am-panel-title" style="font-size:25px" >
+                            投资人公告
+                            <i class="am-fr am-icon-pencil"></i>
+                        </a>
+                    </div>
+                    <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+                        <ul id="index_NoticeList" class="am-list am-list-border am-list-striped">
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;color:#000">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                <div class="am-panel am-panel-secondary">
+                    <div class="am-panel-hd">
+                        <a href="@Url.Content("/ProjectManege/CastProjectView")" class="am-panel-title" style="font-size:25px" >
+                            最新项目
+                            <i class="am-fr am-icon-pencil"></i>
+                        </a>
+                    </div>
+                    <div id="do-not-say-2" class="am-panel-collapse am-collapse am-in">
+                        <ul id="index_ProjectList" class="am-list am-list-border am-list-striped">
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="am-form-group" style="margin-bottom:0px;color:#000">
+                                    <span>投资基金2018第一季度报告</span>
+                                    <span class="am-fr">2018/04/17</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+                <div class="am-panel am-panel-violet">
+                    <div class="am-panel-hd">
+                        <h4 class="am-panel-title" style="font-size:25px" data-am-collapse="{parent: '#accordion', target: '#do-not-say-3'}">
+                            最新点评
+                            <i class="am-fr am-icon-pencil"></i>
+                        </h4>
+                    </div>
+                    <div id="do-not-say-3" class="am-panel-collapse am-collapse am-in">
+                        <div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
+                            <ul id="newCommentList" class="am-slides">
+                                <li>
+                                    <div class="widget am-cf" style="margin-bottom:0px">
+                                        <div class="widget-head am-cf" style="padding-top:0px">
+                                            <div class="widget-title am-inline">
+                                                <div class="tpl-user-panel-profile-picture am-fl" style="margin-bottom:0px;">
+                                                    <img src="~/res/assets/img/user04.png" alt="">
+                                                </div>
+                                                <div class="am-fl am-cf" style="margin:15px 0px 0px 20px">
+                                                    <div style="margin-bottom:10px">
+                                                        <span style="background-color:#e0a424;color:#fff; ">马化腾</span>
+                                                    </div>
+                                                    <span class="am-block">测试项目(二期)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-body " style="border-bottom:1px solid #808080">
+                                            <pre class="am-scrollable-vertical" style="font-size:18px;margin:0px;max-height:350px">
+                                            <i class="am-icon-comment-o"></i>有的开发者希望过一段时间以后恢复播放，
+可以通过在 Data API 中设置可以通过在 Data API 中设置可以通过在 Data API 中设置可以通过在 Data API 中设置可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+                                           </pre>
+                                        </div>
+                                        <div class="row am-fr" style="padding-top:10px">
+                                            <i class="am-icon-clock-o"></i>2018/06/06 12:12:00
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="widget am-cf" style="margin-bottom:0px">
+                                        <div class="widget-head am-cf" style="padding-top:0px">
+                                            <div class="widget-title am-inline">
+                                                <div class="tpl-user-panel-profile-picture am-fl" style="margin-bottom:0px;">
+                                                    <img src="~/res/assets/img/user04.png" alt="">
+                                                </div>
+                                                <div class="am-fl am-cf" style="margin:15px 0px 0px 20px">
+                                                    <div style="margin-bottom:10px">
+                                                        <span style="background-color:#e0a424;color:#fff; ">马化腾</span>
+                                                    </div>
+                                                    <span class="am-block">测试项目(二期)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-body " style="border-bottom:1px solid #808080">
+                                            <pre class="am-scrollable-vertical" style="font-size:18px;margin:0px;max-height:350px">
+                                            <i class="am-icon-comment-o"></i>有的开发者希望过一段时间以后恢复播放，
+可以通过在 Data API 中设置可以通过在 Data API 中设置可以通过在 Data API 中设置可以通过在 Data API 中设置可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+可以通过在 Data API 中设置
+                                           </pre>
+                                        </div>
+                                        <div class="row am-fr" style="padding-top:10px">
+                                            <i class="am-icon-clock-o"></i>2018/06/06 12:12:00
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="widget am-cf" style="margin-bottom:0px">
+                                        <div class="widget-head am-cf" style="padding-top:0px">
+                                            <div class="widget-title am-inline">
+                                                <div class="tpl-user-panel-profile-picture am-fl" style="margin-bottom:0px;">
+                                                    <img src="~/res/assets/img/user04.png" alt="">
+                                                </div>
+                                                <div class="am-fl am-cf" style="margin:15px 0px 0px 20px">
+                                                    <div style="margin-bottom:10px">
+                                                        <span style="background-color:#e0a424;color:#fff; ">马化腾</span>
+                                                    </div>
+                                                    <span class="am-block">测试项目(二期)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-body " style="border-bottom:1px solid #808080">
+                                            <pre class="am-scrollable-vertical" style="font-size:18px;margin:0px;max-height:350px">
+                                            <i class="am-icon-comment-o"></i>有的开发者希望过一段时间以后恢复播放，可以通过在 Data API 中设置可以通过在 Data API 
+                                           </pre>
+                                        </div>
+                                        <div class="row am-fr" style="padding-top:10px">
+                                            <i class="am-icon-clock-o"></i>2018/06/06 12:12:00
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        GetNewNoticeList(8);
+        GetNewProjectList(8);
+        GetNewCommnetList(5);
+    });
+    function GetNewNoticeList(PageSize) {
+        $.ajaxPost({
+            url: '@Url.Content("~/Notice/SelNoticeListData")',
+            data: { "PageSize": PageSize},
+            success: function (result) {
+                debugger;
+                var listHtml = ""; 
+                var _result = eval(result.data);
+                if (result != null) {
+                    for (var i = 0; i < _result.length; i++) {
+                        listHtml += "<li><a href=\"/Notice/NoticeDetailedView?NoId=" + _result[i].Id +"\" ";
+                        listHtml += "class=\"am-form-group\" style=\"margin-bottom:0px;\">";
+                        listHtml += "<span>" + _result[i].NTheme + "</span>";
+                        listHtml += "<span class=\"am-fr\">" + ConvertJSONDateToJSDate(_result[i].InsertTime).Format("yyyy-MM-dd") + "</span>"
+                        listHtml += "</a></li >";
+                    }
+                }
+                $("#index_NoticeList").html(listHtml);
+            }
+        });
+    }
+    function GetNewProjectList(PageSize) {
+        $.ajaxPost({
+            url: '@Url.Content("~/ProjectManege/SelProjectListData")',
+            data: { "PageSize": PageSize},
+            success: function (result) { 
+                var listHtml = "";
+                var _result = eval(result.data);
+                if (_result != null) {
+                    for (var i = 0; i < _result.length; i++) {
+                        listHtml += "<li><a href=\"/ProjectManege/ProjectDetailedView?ProId=" + _result[i].Id + "\" ";
+                        listHtml += "class=\"am-form-group\" style=\"margin-bottom:0px;\">";
+                        listHtml += "<span>" + _result[i].ProName + "</span>";
+                        listHtml += "<span class=\"am-fr\">" + ConvertJSONDateToJSDate(_result[i].InsertTime).Format("yyyy-MM-dd") + "</span>"
+                        listHtml += "</a></li >";
+                    }
+                }
+                $("#index_ProjectList").html(listHtml);
+            }
+        });
+    };
+    function GetNewCommnetList(count) {
+          $.ajaxPost({
+            url: '@Url.Content("~/Comment/GetNewCommentListData")',
+              data: { "count": count},
+            success: function (result) {                
+                var listHtml = "";
+                var rowHtml = "";
+                var _result = result;
+                if (_result != null) {
+                    for (var i = 0; i < _result.length; i++) {
+                        rowHtml ='<li>'+
+                            '<div class="widget am-cf" style = "margin-bottom:0px">'+
+                            '<div class="widget-head am-cf" style="padding-top:0px">'+
+                            '<div class="widget-title am-inline">'+
+                            '<div class="tpl-user-panel-profile-picture am-fl" style="margin-bottom:0px;">'+
+                            '<img src="{0}" alt=""/></div>'+
+                            '<div class="am-fl am-cf" style="margin:15px 0px 0px 20px">'+
+                            '<div style="margin-bottom:10px">'+
+                            '<span style="background-color:#e0a424;color:#fff;">{1}</span></div>'+
+                            '<span class="am-block">{2}({5})</span></div></div></div>'+
+                            '<div class="widget-body " style="border-bottom:1px solid #808080">'+
+                            '<pre class="am-scrollable-vertical" style="font-size:18px;margin:0px;max-height:350px">'+
+                            '&nbsp;&nbsp;&nbsp;&nbsp;<i class="am-icon-comment-o"></i>{3}</pre></div>'+
+                            '<div class="row am-fr" style = "padding-top:10px">'+
+                            '<i class="am-icon-clock-o"></i>{4}</div ></div></li>';
+                        var commnetDate = ConvertJSONDateToJSDate(_result[i].InsertTime).Format("yyyy-MM-dd");
+                        listHtml += rowHtml.format(_result[i].AccountIcon, _result[i].AccountName, _result[i].ProName, _result[i].Content, commnetDate, _result[i].ProPhase);
+                    }
+                }              
+                $("#newCommentList").html(listHtml);
+            }
+        });
+
+    }
+</script>

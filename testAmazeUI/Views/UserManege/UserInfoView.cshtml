@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "UserInfoView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using testAmazeUI.Models;
+@{
+
+    var loginUserInfo = ViewBag.userInfo as tb_user;
+    var selUserInfo= ViewBag.SelUserInfo as tb_user;
+    var userId = selUserInfo.Id;
+}
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">个人信息</div>
+                    </div>
+                    <div class="widget-body am-fr">
+                        <form class="am-form tpl-form-border-form tpl-form-border-br">
+                            <div class="am-form-group">
+                                <div class="am-u-lg-4 am-u-md-4 am-u-sm-12" style="height:600px;background-color:antiquewhite">
+                                    <!-- 用户信息 -->
+                                    <div class="tpl-sidebar-user-panel">
+                                        <div class="tpl-user-panel-slide-toggleable" style="margin-left:30%">
+                                            <div class="tpl-user-panel-profile-picture">
+                                                <img id="userIcon" src="@selUserInfo.AccountIcon" alt="">
+                                            </div>
+                                            <a id="a_upLoadUserIcon" href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 上传头像</a>
+                                            <div id="btn_upLoadUserIcon" class="am-hide"></div>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="changeUserInfo" class="am-btn am-btn-primary tpl-btn-bg-color-success  am-btn-block" >修改信息</button>
+                                    <ul class="am-list am-list-static am-list-border">
+                                        <li>
+                                            <i class="am-icon-male am-icon-fw"></i>
+                                            用户名: @selUserInfo.UserName
+                                        </li>
+                                        <li>
+                                            <i class="am-icon-phone am-icon-fw"></i>
+                                            手机：@selUserInfo.Mobile
+                                        </li>
+                                        <li>
+                                            <i class="am-icon-at am-icon-fw"></i>
+                                            邮箱：@selUserInfo.Email
+                                        </li>
+                                        <li><i class="am-icon-pencil am-icon-fw"></i>留言：</li>
+                                    </ul>
+                                </div>
+
+                                <div class="am-u-lg-8 am-u-md-8 am-u-sm-12" style="height:600px;">
+                                    <div class="am-tabs" data-am-tabs="{noSwipe: 1}">
+                                        <ul class="am-tabs-nav am-nav am-nav-tabs">
+                                            <li class="am-active"><a href="#tab1">投资点评</a></li>
+                                            <li><a href="#tab2">负责项目</a></li>
+                                            <li><a href="#tab3">投资纪要</a></li>
+                                        </ul>
+
+                                        <div class="am-tabs-bd">
+                                            <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                                                置身人群中<br>你只需要被淹没 享受 沉默<br>退到人群后<br>你只需给予双手 微笑 等候
+                                            </div>
+                                            <div class="am-tab-panel am-fade" id="tab2">
+                                                走在忠孝东路<br>徘徊在茫然中<br>在我的人生旅途<br>选择了多少错误<br>我在睡梦中惊醒<br>感叹悔言无尽<br>恨我不能说服自己<br>接受一切教训<br>让生命去等候<br>等候下一个漂流<br>让生命去等候<br>等候下一个伤口
+                                            </div>
+                                            <div class="am-tab-panel am-fade" id="tab3">
+                                                我就这样告别山下的家，我实在不愿轻易让眼泪留下。我以为我并不差不会害怕，我就这样自己照顾自己长大。我不想因为现实把头低下，我以为我并不差能学会虚假。怎样才能够看穿面具里的谎话？别让我的真心散的像沙。如果有一天我变得更复杂，还能不能唱出歌声里的那幅画？
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+      var userIconUp = WebUploader.create({
+            swf: '@Url.Content("~/WebUploader/Uploader.swf")',
+            // 文件接收服务端。
+            server: '@Url.Content("~/Upload/UpLoadProcess")',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+          pick: '#btn_upLoadUserIcon',
+          auto: true,
+            formData: {
+                UpType: "userIcon"
+            },
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }, duplicate: true
+        });
+        // 当有文件添加进来的时候
+       userIconUp.on('fileQueued', function (file) {
+
+        });
+        // 文件上传过程中创建进度条实时显示。
+        userIconUp.on('uploadProgress', function (file, percentage) {
+
+        });
+        // 文件上传成功。
+        userIconUp.on('uploadSuccess', function (file, response) {
+            SaveUserIcon(response.FilePath);
+        });
+        // 文件上传失败，显示上传出错。
+        userIconUp.on('uploadError', function (file) {
+            alert("上传失败，请重新添加");
+            uploader.stop();
+
+        });
+        // 完成上传完了，成功或者失败，先删除进度条。
+        userIconUp.on('uploadComplete', function (file) {
+            $("#btn_upLoadUserIcon").hide();
+    });
+
+    function SaveUserIcon(accountIcon) {
+        $.ajaxPost({
+            url: '@Url.Content("~/UserManege/UserChangeInfo")',
+            data: {
+                AccountIcon: accountIcon,Id:"@userId"
+            },
+            success: function (result) {
+                $("#userIcon").attr("src", result.AccountIcon);
+            }
+        })
+     };
+    $(function () {
+        $("#changeUserInfo").click(function () {
+            OpenChangeUserInfoModal({ uId: "@userId" });
+        });
+
+        $("#a_upLoadUserIcon").click(function () {
+            $("#btn_upLoadUserIcon").find(":file").trigger("click");
+        })
+    });
+
+</script>

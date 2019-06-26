@@ -1,0 +1,21 @@
+﻿@{
+    if (Model != null)
+    {
+        var mydeValue = Model.deValue != null ? Model.deValue : "null";
+        foreach (var item in Model.data)
+        {
+            if (item.Value == mydeValue)
+            {
+                <option value="@item.Value" selected>@item.Name</option>
+            }
+            else
+            {
+                <option value="@item.Value">@item.Name</option>
+            }
+
+        }
+
+    }
+}
+
+}

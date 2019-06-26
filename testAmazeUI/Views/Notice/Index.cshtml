@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf am-g">
+                
+                        <h1>投资人公告</h1>
+                        @*<div class="widget-title  am-cf"></div>*@
+
+
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                                <input id="txtStarTime" type="text" class="am-form-field" placeholder="开始时间" data-am-datepicker="" value="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")" readonly="" />
+                                <span class="am-input-group-label">
+                                    <i class="am-icon-th am-icon-fw"></i>  至
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                                <input id="txtEndTime" type="text" class="am-form-field" placeholder="结束时间" data-am-datepicker="" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly="" />
+                                <span class="am-input-group-label">
+                                    <i class="am-icon-th am-icon-fw"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                                <input id="txtKeyWord" type="text" class="am-form-field" placeholder="关键字">
+                                <span class="am-input-group-btn">
+                                    <button id="btnQueryNoticeList" class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="am-u-sm-12">
+                            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black am-table-hover" id="tb_Notice">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th data-bind="NTheme">公告主题</th>
+                                        <th data-bind="NoticeNO">公告编号</th>
+                                        <th data-bind="UserName">作者</th>
+                                        <th data-bind="NDate">日期</th>
+                                        <th data-bind="AreaName">地点</th>
+                                        <th data-bind="NFlieNum">附件</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="pl_NoticeList" class="am-u-lg-12 am-cf">
+                            <div class="am-fr">
+                                <ul class="am-pagination tpl-pagination">
+                                    <li class="am-disabled"><a href="#">«</a></li>
+                                    <li class="am-active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var pageOpt = {};
+     $(function () {
+         Laod_tb_Notice({ PageIndex: 1 });
+         $("#btnQueryNoticeList").click(function () {
+             Laod_tb_Notice({ PageIndex: 1 });
+         });
+          $(".tbRow").click(function () {           
+            var Id = $(this).find(".PrimaryId").html();
+            if (Id != "") {
+                window.location.href = '@Url.Content("/Notice/NoticeDetailedView")' + "?NoId=" + Id;
+            }
+        });
+    });
+ var EditNoticeInfo = function (Id) {
+        debugger;
+        window.location.href = '@Url.Content("/Notice/EditNoticeView")' + "?NoId=" + Id + "&ReUrl=" + window.location.href; 
+        window.event.stopPropagation();
+        return false;
+    };
+
+    var DelNoticeInfo = function (NoId) {
+        $.ajaxPost({
+            url: '@Url.Content("~/Notice/DelNotice")',
+            data: { NoId: NoId,remark:""},
+            success: function (result) {
+                debugger;
+                alert("删除成功！");
+                Laod_tb_Notice({ PageIndex: pageOpt.PageIndex });
+            }
+        });
+        window.event.stopPropagation();
+    };
+    function Laod_tb_Notice(options) {
+        var BeginTime = $("#txtStarTime").val();
+        var EndTime = $("#txtEndTime").val();
+        var KeyWord = $("#txtKeyWord").val();
+        var TBcolumns = GetTableTh("tb_Notice");
+         pageOpt = $.extend($.defaultsPage, options);
+        pageOpt.ID = "pl_NoticeList";
+        pageOpt.ClickFun = "Laod_tb_Notice";       
+        $.ajaxPost({
+            url: '@Url.Content("~/Notice/SelNoticeListTable")',
+            data: {
+                "BeginTime": BeginTime, "EndTime": EndTime, "KeyWord": KeyWord, "TBcolumns": TBcolumns, "PageIndex": pageOpt.PageIndex, "PageSize": pageOpt.PageSize
+                 ,actionID: "Id", doEitFunction: "EditNoticeInfo", doDelFunction: "DelNoticeInfo",isHasAction: true},
+            success: function (result) {              
+                $('#tb_Notice>tbody').html(result.data);
+               
+                pageOpt = $.extend(pageOpt, result.pageInfo);
+                $.BindPageList(pageOpt);
+            }
+        });
+       
+    }
+ </script>

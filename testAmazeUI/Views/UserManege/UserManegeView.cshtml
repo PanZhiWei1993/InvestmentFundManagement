@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "UserManegeView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/res/js/TabelControll.js"></script>
+@using testAmazeUI.Models;
+@{
+
+
+}
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf am-g">
+                        <h1 style="font-size:25px">
+                            <span class="am-icon-home am-icon-lg"></span>
+                            <span style="font-size:35px;padding:10px 0 0 15px">用户管理</span>
+                        </h1>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <form class="am-form tpl-form-border-form tpl-form-border-br  am-u-lg-12 am-u-md-12">
+                            <div class="am-form-group ">
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label ">用户名</span>
+                                        <input id="inp_userMan_SelUserName" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label ">邮箱</span>
+                                        <input id="inp_userMan_SelEmail" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-2">
+                                    <button type="button" class="am-btn-default am-btn-block am-radius mybutton" onclick="Laod_tb_UserManege({ PageIndex:1 })">搜&nbsp;索</button>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-2">
+                                    <button type="button" class="am-btn-secondary am-btn-block am-radius mybutton" onclick="GetTableTh('tb_UserManege')">新增用户</button>
+                                </div>
+                            </div>
+
+                            <div class="am-u-sm-12">
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black table-top-line am-table-hover" id="tb_UserManege">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th data-bind="UserName">用户名</th>
+                                            <th data-bind="Account">账号</th>
+                                            <th data-bind="Mobile">手机</th>
+                                            <th data-bind="Email">邮箱</th>
+                                            <th data-bind="Utype">类型</th>
+                                            <th data-bind="InsertTime">创建时间</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                        <!-- more data -->
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div id="pl_userList" class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        <li class="am-disabled"><a href="#">«</a></li>
+                                        <li class="am-active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li><a href="#">»</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        Laod_tb_UserManege({ PageIndex: 1 });
+    });
+ 
+    function Laod_tb_UserManege(options) {
+
+        var uName = $("#inp_userMan_SelUserName").val();
+        var uEmail = $("#inp_userMan_SelEmail").val();
+        var TBcolumns = GetTableTh("tb_UserManege");
+        var pageOpt = $.extend($.defaultsPage, options);
+        pageOpt.ID = "pl_userList";
+        pageOpt.ClickFun = "Laod_tb_UserManege";       
+        $.ajaxPost({
+            url: '@Url.Content("~/UserManege/SelectUserListByQuery")',
+            data: { "uName": uName, "uEmail": uEmail, "TBcolumns": TBcolumns, "PageIndex": pageOpt.PageIndex, "PageSize": pageOpt.PageSize },
+            success: function (result) {              
+                $('#tb_UserManege>tbody').html(result.data);               
+                pageOpt = $.extend(pageOpt, result.pageInfo);
+                $.BindPageList(pageOpt);
+            }
+        });
+       
+    }
+</script>

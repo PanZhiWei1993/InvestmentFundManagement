@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FUNDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+          <Property Name="Code" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tb_comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="100" />
+          <Property Name="Content" Type="nvarchar" MaxLength="1000" />
+          <Property Name="InsertTime" Type="datetime" />
+          <Property Name="Account" Type="nvarchar" MaxLength="32" />
+          <Property Name="ProId" Type="nvarchar" MaxLength="32" />
+          <Property Name="ProPhase" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tb_constant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="ItemType" Type="nvarchar" MaxLength="10" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsertTime" Type="datetime" />
+          <Property Name="ItemChNote" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tb_FileInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="FileType" Type="nvarchar" MaxLength="50" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FileSName" Type="nvarchar" MaxLength="500" />
+          <Property Name="InsertTime" Type="datetime" />
+          <Property Name="AddUser" Type="nvarchar" MaxLength="32" />
+          <Property Name="UpType" Type="nvarchar" MaxLength="50" />
+          <Property Name="FileSize" Type="int" />
+        </EntityType>
+        <EntityType Name="tb_interview_record">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" />
+          <Property Name="Area" Type="nvarchar" MaxLength="300" />
+          <Property Name="SortTime" Type="datetime" />
+          <Property Name="InnerMan" Type="nvarchar" MaxLength="200" />
+          <Property Name="OuterMan" Type="nvarchar" MaxLength="200" />
+          <Property Name="Content" Type="nvarchar" MaxLength="4000" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ProId" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="tb_notice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="NoticeNO" Type="nvarchar" MaxLength="10" />
+          <Property Name="NDate" Type="datetime" />
+          <Property Name="NAddress" Type="int" />
+          <Property Name="ContactAccount" Type="nvarchar" MaxLength="32" />
+          <Property Name="Content" Type="nvarchar" MaxLength="1000" />
+          <Property Name="InsertTime" Type="datetime" />
+          <Property Name="UdateTime" Type="datetime" />
+          <Property Name="NTheme" Type="nvarchar" MaxLength="300" />
+          <Property Name="InsertUser" Type="nvarchar" MaxLength="32" />
+          <Property Name="UpdateUser" Type="nvarchar" MaxLength="32" />
+          <Property Name="IsUsed" Type="bit" Nullable="false" />
+          <Property Name="DelAccount" Type="nvarchar" MaxLength="32" />
+          <Property Name="DeleteTime" Type="datetime" />
+          <Property Name="DelRemark" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tb_notice_docment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="FileDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="InsertDate" Type="datetime" />
+          <Property Name="Account" Type="nvarchar" MaxLength="32" />
+          <Property Name="NoticeId" Type="nvarchar" MaxLength="32" />
+          <Property Name="FileId" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="tb_PRE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PdName" Type="nchar" MaxLength="20" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="delTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_Pro_PRE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_ProjectID" Type="nvarchar" MaxLength="32" />
+          <Property Name="fk_PREID" Type="int" />
+        </EntityType>
+        <EntityType Name="tb_project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="CompName" Type="nvarchar" MaxLength="80" />
+          <Property Name="ProPhaseId" Type="nvarchar" MaxLength="32" />
+          <Property Name="AreaId" Type="int" />
+          <Property Name="ProManager" Type="nvarchar" MaxLength="32" />
+          <Property Name="ProWebUrl" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProApp" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProWeChat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Originator" Type="nvarchar" MaxLength="30" />
+          <Property Name="OriginatorEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="OriginatorPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="30" />
+          <Property Name="ContactEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="ProBrief" Type="nvarchar" MaxLength="2000" />
+          <Property Name="InvestmentLogic" Type="nvarchar" MaxLength="2000" />
+          <Property Name="InvestmentAmount" Type="nvarchar" MaxLength="20" />
+          <Property Name="InvestmentTime" Type="datetime" />
+          <Property Name="ValueOfAssessment" Type="nvarchar" MaxLength="10" />
+          <Property Name="ValueofTime" Type="datetime" />
+          <Property Name="InsertTime" Type="datetime" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="InsertUser" Type="nvarchar" MaxLength="32" />
+          <Property Name="UpdateUser" Type="nvarchar" MaxLength="32" />
+          <Property Name="ProName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FinancingScale" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsUsed" Type="bit" Nullable="false" />
+          <Property Name="DelAccount" Type="nvarchar" MaxLength="32" />
+          <Property Name="DeleteTime" Type="datetime" />
+          <Property Name="DelRemark" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tb_project_docment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="ProPhaseId" Type="nvarchar" MaxLength="32" />
+          <Property Name="FileDesc" Type="nvarchar" MaxLength="200" />
+          <Property Name="SortTime" Type="datetime" />
+          <Property Name="InsertTime" Type="datetime" />
+          <Property Name="ProId" Type="nvarchar" MaxLength="32" />
+          <Property Name="FileId" Type="nvarchar" MaxLength="32" />
+          <Property Name="Account" Type="nvarchar" MaxLength="32" />
+          <Property Name="DocmentTypeId" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="tb_project_image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="FileId" Type="varchar" MaxLength="32" />
+          <Property Name="ProId" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="tb_user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="30" />
+          <Property Name="Account" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+          <Property Name="Utype" Type="int" />
+          <Property Name="Password" Type="nvarchar" MaxLength="32" />
+          <Property Name="InsertTime" Type="datetime" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="AccountIcon" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityContainer Name="FUNDModelStoreContainer">
+          <EntitySet Name="tb_area" EntityType="Self.tb_area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_comment" EntityType="Self.tb_comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_constant" EntityType="Self.tb_constant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_FileInfo" EntityType="Self.tb_FileInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_interview_record" EntityType="Self.tb_interview_record" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_notice" EntityType="Self.tb_notice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_notice_docment" EntityType="Self.tb_notice_docment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_PRE" EntityType="Self.tb_PRE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Pro_PRE" EntityType="Self.tb_Pro_PRE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_project" EntityType="Self.tb_project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_project_docment" EntityType="Self.tb_project_docment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_project_image" EntityType="Self.tb_project_image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_user" EntityType="Self.tb_user" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FUNDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_constant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="ItemChNote" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="FUNDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_constant" EntityType="Self.tb_constant" />
+          <EntitySet Name="tb_area" EntityType="FUNDModel.tb_area" />
+          <EntitySet Name="tb_PRE" EntityType="FUNDModel.tb_PRE" />
+          <EntitySet Name="tb_Pro_PRE" EntityType="FUNDModel.tb_Pro_PRE" />
+          <EntitySet Name="tb_FileInfo" EntityType="FUNDModel.tb_FileInfo" />
+          <EntitySet Name="tb_notice_docment" EntityType="FUNDModel.tb_notice_docment" />
+          <EntitySet Name="tb_project_image" EntityType="FUNDModel.tb_project_image" />
+          <EntitySet Name="tb_project_docment" EntityType="FUNDModel.tb_project_docment" />
+          <EntitySet Name="tb_interview_record" EntityType="FUNDModel.tb_interview_record" />
+          <EntitySet Name="tb_project" EntityType="FUNDModel.tb_project" />
+          <EntitySet Name="tb_notice" EntityType="FUNDModel.tb_notice" />
+          <EntitySet Name="tb_comment" EntityType="FUNDModel.tb_comment" />
+          <EntitySet Name="tb_user" EntityType="FUNDModel.tb_user" />
+        </EntityContainer>
+        <EntityType Name="tb_area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_PRE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PdName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="delTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_Pro_PRE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_ProjectID" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="fk_PREID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tb_FileInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FileType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FilePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FileSName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="AddUser" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="UpType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FileSize" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tb_notice_docment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FileDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="InsertDate" Type="DateTime" Precision="3" />
+          <Property Name="Account" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="NoticeId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FileId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_project_image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="FileId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="ProId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_project_docment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ProPhaseId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FileDesc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SortTime" Type="DateTime" Precision="3" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="ProId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FileId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Account" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DocmentTypeId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_interview_record">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="SortTime" Type="DateTime" Precision="3" />
+          <Property Name="InnerMan" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OuterMan" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ProId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CompName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ProPhaseId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AreaId" Type="Int32" />
+          <Property Name="ProManager" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ProWebUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProApp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProWeChat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Originator" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="OriginatorEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OriginatorPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ContactEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ProBrief" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="InvestmentLogic" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="InvestmentAmount" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="InvestmentTime" Type="DateTime" Precision="3" />
+          <Property Name="ValueOfAssessment" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ValueofTime" Type="DateTime" Precision="3" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="InsertUser" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateUser" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ProName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FinancingScale" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsUsed" Type="Boolean" Nullable="false" />
+          <Property Name="DelAccount" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DeleteTime" Type="DateTime" Precision="3" />
+          <Property Name="DelRemark" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_notice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="NoticeNO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NDate" Type="DateTime" Precision="3" />
+          <Property Name="NAddress" Type="Int32" />
+          <Property Name="ContactAccount" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="UdateTime" Type="DateTime" Precision="3" />
+          <Property Name="NTheme" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="InsertUser" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateUser" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="IsUsed" Type="Boolean" Nullable="false" />
+          <Property Name="DelAccount" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DeleteTime" Type="DateTime" Precision="3" />
+          <Property Name="DelRemark" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="Account" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ProId" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ProPhase" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Account" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Utype" Type="Int32" />
+          <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="InsertTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="AccountIcon" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FUNDModelStoreContainer" CdmEntityContainer="FUNDEntities">
+          <EntitySetMapping Name="tb_constant">
+            <EntityTypeMapping TypeName="FUNDModel.tb_constant">
+              <MappingFragment StoreEntitySet="tb_constant">
+                <ScalarProperty Name="ItemChNote" ColumnName="ItemChNote" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_area">
+            <EntityTypeMapping TypeName="FUNDModel.tb_area">
+              <MappingFragment StoreEntitySet="tb_area">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_PRE">
+            <EntityTypeMapping TypeName="FUNDModel.tb_PRE">
+              <MappingFragment StoreEntitySet="tb_PRE">
+                <ScalarProperty Name="delTime" ColumnName="delTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="PdName" ColumnName="PdName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Pro_PRE">
+            <EntityTypeMapping TypeName="FUNDModel.tb_Pro_PRE">
+              <MappingFragment StoreEntitySet="tb_Pro_PRE">
+                <ScalarProperty Name="fk_PREID" ColumnName="fk_PREID" />
+                <ScalarProperty Name="fk_ProjectID" ColumnName="fk_ProjectID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_FileInfo">
+            <EntityTypeMapping TypeName="FUNDModel.tb_FileInfo">
+              <MappingFragment StoreEntitySet="tb_FileInfo">
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="UpType" ColumnName="UpType" />
+                <ScalarProperty Name="AddUser" ColumnName="AddUser" />
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+                <ScalarProperty Name="FileSName" ColumnName="FileSName" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_notice_docment">
+            <EntityTypeMapping TypeName="FUNDModel.tb_notice_docment">
+              <MappingFragment StoreEntitySet="tb_notice_docment">
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="NoticeId" ColumnName="NoticeId" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="InsertDate" ColumnName="InsertDate" />
+                <ScalarProperty Name="FileDesc" ColumnName="FileDesc" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_project_image">
+            <EntityTypeMapping TypeName="FUNDModel.tb_project_image">
+              <MappingFragment StoreEntitySet="tb_project_image">
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_project_docment">
+            <EntityTypeMapping TypeName="FUNDModel.tb_project_docment">
+              <MappingFragment StoreEntitySet="tb_project_docment">
+                <ScalarProperty Name="DocmentTypeId" ColumnName="DocmentTypeId" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+                <ScalarProperty Name="SortTime" ColumnName="SortTime" />
+                <ScalarProperty Name="FileDesc" ColumnName="FileDesc" />
+                <ScalarProperty Name="ProPhaseId" ColumnName="ProPhaseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_interview_record">
+            <EntityTypeMapping TypeName="FUNDModel.tb_interview_record">
+              <MappingFragment StoreEntitySet="tb_interview_record">
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="OuterMan" ColumnName="OuterMan" />
+                <ScalarProperty Name="InnerMan" ColumnName="InnerMan" />
+                <ScalarProperty Name="SortTime" ColumnName="SortTime" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_project">
+            <EntityTypeMapping TypeName="FUNDModel.tb_project">
+              <MappingFragment StoreEntitySet="tb_project">
+                <ScalarProperty Name="DelRemark" ColumnName="DelRemark" />
+                <ScalarProperty Name="DeleteTime" ColumnName="DeleteTime" />
+                <ScalarProperty Name="DelAccount" ColumnName="DelAccount" />
+                <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+                <ScalarProperty Name="FinancingScale" ColumnName="FinancingScale" />
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="InsertUser" ColumnName="InsertUser" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+                <ScalarProperty Name="ValueofTime" ColumnName="ValueofTime" />
+                <ScalarProperty Name="ValueOfAssessment" ColumnName="ValueOfAssessment" />
+                <ScalarProperty Name="InvestmentTime" ColumnName="InvestmentTime" />
+                <ScalarProperty Name="InvestmentAmount" ColumnName="InvestmentAmount" />
+                <ScalarProperty Name="InvestmentLogic" ColumnName="InvestmentLogic" />
+                <ScalarProperty Name="ProBrief" ColumnName="ProBrief" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="OriginatorPhone" ColumnName="OriginatorPhone" />
+                <ScalarProperty Name="OriginatorEmail" ColumnName="OriginatorEmail" />
+                <ScalarProperty Name="Originator" ColumnName="Originator" />
+                <ScalarProperty Name="ProWeChat" ColumnName="ProWeChat" />
+                <ScalarProperty Name="ProApp" ColumnName="ProApp" />
+                <ScalarProperty Name="ProWebUrl" ColumnName="ProWebUrl" />
+                <ScalarProperty Name="ProManager" ColumnName="ProManager" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="ProPhaseId" ColumnName="ProPhaseId" />
+                <ScalarProperty Name="CompName" ColumnName="CompName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_notice">
+            <EntityTypeMapping TypeName="FUNDModel.tb_notice">
+              <MappingFragment StoreEntitySet="tb_notice">
+                <ScalarProperty Name="DelRemark" ColumnName="DelRemark" />
+                <ScalarProperty Name="DeleteTime" ColumnName="DeleteTime" />
+                <ScalarProperty Name="DelAccount" ColumnName="DelAccount" />
+                <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="InsertUser" ColumnName="InsertUser" />
+                <ScalarProperty Name="NTheme" ColumnName="NTheme" />
+                <ScalarProperty Name="UdateTime" ColumnName="UdateTime" />
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ContactAccount" ColumnName="ContactAccount" />
+                <ScalarProperty Name="NAddress" ColumnName="NAddress" />
+                <ScalarProperty Name="NDate" ColumnName="NDate" />
+                <ScalarProperty Name="NoticeNO" ColumnName="NoticeNO" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_comment">
+            <EntityTypeMapping TypeName="FUNDModel.tb_comment">
+              <MappingFragment StoreEntitySet="tb_comment">
+                <ScalarProperty Name="ProPhase" ColumnName="ProPhase" />
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_user">
+            <EntityTypeMapping TypeName="FUNDModel.tb_user">
+              <MappingFragment StoreEntitySet="tb_user">
+                <ScalarProperty Name="AccountIcon" ColumnName="AccountIcon" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="InsertTime" ColumnName="InsertTime" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Utype" ColumnName="Utype" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

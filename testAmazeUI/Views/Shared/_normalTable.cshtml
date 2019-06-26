@@ -1,0 +1,69 @@
+﻿@using testAmazeUI.Models;
+@{
+    if (Model.data != null)
+    {
+
+        var i = Model.IndexStar;
+        bool hasAction = Model.isHasAction;
+        string doEitFunction = Model.doEitFunction;
+        string doDelFunction = Model.doDelFunction;
+        string actionIDValue = "";
+        foreach (var item in Model.data)
+        {
+            i++;
+<tr class="tbRow">
+
+    <td>@i</td>
+    @{
+        var NowData = (IDictionary<string, object>)item;
+        try
+        {
+            <td class="hide PrimaryId">@NowData["Id"]</td>
+        }
+        catch (Exception ex)
+        {
+        }
+
+        foreach (var couName in Model.TBcolumns)
+        {
+            try
+            {
+                <td class="am-text-truncate" style="max-width:300px">@NowData[couName]</td>
+            }
+            catch (Exception ex)
+            {
+
+                continue;
+            }
+        }
+        if (hasAction)
+        {
+            actionIDValue = NowData[Model.actionID];
+            <td>
+                <div class="tpl-table-black-operation">
+                    @{
+                        if (!String.IsNullOrEmpty(doEitFunction))
+                        {
+                            <a href="javascript:;" class="tpl-table-black-operation-edit" onclick="@(doEitFunction+"('"+actionIDValue+"')");return false;">
+                                <i class="am-icon-pencil"></i> 编辑
+                            </a>
+                        }
+                        if (!String.IsNullOrEmpty(doDelFunction))
+                        {
+                            <a href="javascript:void(0);" class="tpl-table-black-operation-del" onclick="@(doDelFunction+"('"+actionIDValue+"')");return false; ">
+                                <i class="am-icon-trash"></i> 删除
+                            </a>
+                        }
+                    }
+                </div>
+            </td>
+        }
+    }
+</tr>
+        }
+       
+    }
+}
+
+
+

@@ -1,0 +1,19 @@
+常量数据表分类 constant
+
+PjRank      项目阶段
+PjTextType  项目文件类型
+TradeType   行业标签
+
+
+文件信息表fileInfo 上传途径分类upType
+
+projectImg 项目图片
+projectFile 项目文档
+noticeFile  公告附件
+userIcon   用户头像
+
+
+
+
+input 验证
+ValidateNotEmpy 

@@ -1,0 +1,271 @@
+﻿
+@{
+    ViewBag.Title = "EditNoticeView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@using testAmazeUI.Models.resultModel;
+@{
+    var ReUrl = ViewBag.ReUrl;
+    var NoticeInfo = ViewBag.NoticeInfo as ReNoticeInfo;
+}
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        <div class="row">
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl ">修改公告</div>
+                    </div>
+                    <div class="widget-body am-fr">
+
+                        <form class="am-form tpl-form-border-form tpl-form-border-br am-u-lg-8 am-u-md-10">
+                            <div class="am-form-group am-scrollable-horizontal">
+
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-xl ">主题</span>
+                                        <input id="txtNTheme" type="text" class="am-form-field" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-xl">时间</span>
+                                        <input id="txtNDate" type="text" class="am-form-field" data-am-datepicker="" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly="" />
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group ">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label   am-padding-horizontal-xl" style="max-height:12px">地区</span>
+                                        <select id="selNAddress" data-am-selected class="am-form-field am-u-sm-8 mySpanSelect" style="display: none;">
+                                            @{Html.RenderAction("GetSelectBtn_AreaList", "Constant"); }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <div class="am-input-group">
+                                        <span class="am-input-group-label am-padding-horizontal-xl">内容</span>
+                                        <textarea class="" rows="5" id="txrContent" placeholder="请输入文章内容"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="am-panel-group " id="accordion2">
+                                    <div class="am-panel am-panel-default ">
+                                        <div class="am-panel-hd am-cf" data-am-collapse="{target: '#do-not-say-5'}">
+                                            <span class="am-u-sm-9 am-u-md-9 am-u-lg-6" style="font-size:20px;font-weight:600">公告附件</span>
+                                            <button id="btn_addNoticeFile" type="button" class="am-fr  am-btn am-btn-primary am-radius">添加公告附件</button>
+                                        </div>
+                                        <div id="do-not-say-5" class="am-panel-collapse am-collapse am-in">
+                                            <div class="am-panel-hd am-scrollable-horizontal">
+                                                <table style="width:100%" class="am-table am-table-compact am-table-striped tpl-table-black am-table-hover am-text-nowrap" id="tb_noticeDocment">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>序号</th>
+                                                            <th data-bind="FileSName">文件名称</th>
+                                                            <th data-bind="FileType">文件类型</th>
+                                                            <th data-bind="FileDesc">文件描述</th>
+                                                            <th data-bind="InsertDate">创建时间</th>
+                                                            <th data-bind="UserName">操作人</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="am-form-group am-form-inline">
+                                    <div class="am-u-sm-6 am-u-sm-push-3">
+                                        <button id="btnSaveNotice" type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-xl">保存</button>
+                                    </div>
+                                    <div class="am-u-sm-6 ">
+                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-xl">发布</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    var noticeFileModel = GetNewNoticeFileModel();
+    var noticeModel = GetNewNoticeModel();
+
+      //保存公告附件
+            var noticeFileModalSave = function () {
+                noticeFileModel.FileDesc = $("#tr_mo_NoticeFileRemark").val();
+                noticeFileModel.NoticeId = noticeModel.Id;
+                $.ajaxPost({
+                    url: '@Url.Content("~/Notice/SaveNoticeDocment")',
+                    data: noticeFileModel,
+                    success: function (result) {
+                        debugger;
+                        noticeFileModel = $.extend({}, noticeFileModel, result);
+                        if (noticeModel.Id == "") {
+                            noticeModel.Id = result.NoticeId;
+                        }
+                        BindNoticeDocmentTable(noticeModel.Id);
+                    }
+                });
+        };
+        function DelNoticeDocment(NDId) {
+            $.ajaxPost({
+                url: '@Url.Content("~/Notice/DelNoticeDocment")',
+                data: { NDId: NDId},
+                    success: function (result) {
+                        alert("删除成功！");
+                        BindNoticeDocmentTable(noticeModel.Id);
+                    }
+                });
+    };
+        //保存公告信息
+        function SaveNoticeInfo() {
+            noticeModel.NTheme = $("#txtNTheme").val();
+            noticeModel.NDate = $("#txtNDate").val();
+            noticeModel.NAddress = $("#selNAddress").val();
+            noticeModel.Content = $("#txrContent").val();
+            $.ajaxPost({
+                    url: '@Url.Content("~/Notice/EditNoticeData")',
+                    data: noticeModel,
+                    success: function (result) {
+                        alert("保存成功！");
+                         window.location.href = "@ReUrl";
+                    }
+                });
+
+    };
+
+           //刷新公告附件列表
+          function BindNoticeDocmentTable(noticeId) {
+           var TBcolumns = GetTableTh("tb_noticeDocment");
+           $.ajaxPost({
+            url: '@Url.Content("~/Notice/SelNoticeDocmentList")',
+               data: {
+                   "NoticeId": noticeId, "TBcolumns": TBcolumns, actionID: "Id", doEitFunction: "",
+                   doDelFunction: "DelNoticeDocment", isHasAction: true
+               },
+            success: function (result) {
+                $('#tb_noticeDocment>tbody').html(result.data);
+            }
+        });
+    }
+
+    $(function () {
+        //初始化页面
+        NoticeIntil();
+        //保存按钮事件绑定
+        $("#btn_addNoticeFile").click(function (e) {
+            NoticeFileModelOpen("", noticeModel.Id);
+            return false;
+        });
+        $("#btnSaveNotice").click(function (e) {
+            SaveNoticeInfo();
+        });
+        //初始化上传控件
+        var noticeFileUp = WebUploader.create({
+            swf: '@Url.Content("~/WebUploader/Uploader.swf")',
+            // 文件接收服务端。
+            server: 'http://localhost:35831/Upload/UpLoadProcess',
+            // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#uBtn_NoticeFile',
+            formData: {
+            UpType: "noticeFile"
+                },
+            resize: false
+        });
+        //当有文件添加前触发，确保只有一条文件上传
+        noticeFileUp.on('beforeFileQueued', function (file) {
+        // $list为容器jQuery实例
+        noticeFileUp.reset();
+    });
+        // 当有文件添加进来后的时候
+        noticeFileUp.on('fileQueued', function (file) {
+        // $list为容器jQuery实例
+        $("#inp_upNoticeFileName").val(file.name);
+    });
+        // 文件上传过程中创建进度条实时显示。
+        noticeFileUp.on('uploadProgress', function (file, percentage) {
+
+    });
+        // 文件上传成功。
+        noticeFileUp.on('uploadSuccess', function (file, response) {
+                debugger;
+                var upResult = noticeFileUp.getStats();
+                if (upResult.queueNum + upResult.progressNum <= 0) {
+                    if (upResult.uploadFailNum <= 0) {
+                        noticeFileModel.FileId = response.FileId;
+                        noticeFileModalSave();
+                    }
+                    else {
+                        alert("上传失败");
+               }
+        }
+
+    });
+        // 文件上传失败，显示上传出错。
+        noticeFileUp.on('uploadError', function (file) {
+        alert("上传失败，请重新添加");
+        uploader.stop();
+    });
+        // 完成上传完了，成功或者失败，先删除进度条。
+        noticeFileUp.on('uploadComplete', function (file) {
+        noticeFileUp.reset();
+    });
+         //打开公告附件模态框
+         var NoticeFileModelOpen = function (Id, NoticeID) {
+                noticeFileModel = GetNewNoticeFileModel();
+                if (typeof (Id) != "undefined" && Id != "") {
+                    $.ajaxPost({
+                        url: '@Url.Content("~/Notice/SleNoticeDocmentById")',
+                        data: { Id: Id },
+                        success: function (result) {
+                            debugger;
+                            noticeFileModel = $.extend({}, noticeFileModel, result);
+                        }
+                    });
+                }
+                $('#tr_mo_NoticeFileRemark').val(noticeFileModel.FileDesc);
+                $("#inp_upNoticeFileName").val("");
+                $('#modal_addNoticeFile').modal({
+                    closeViaDimmer: false,
+                    onConfirm: function (options) {
+                        noticeFileUp.upload();
+                    }
+                });
+             noticeFileUp.refresh();
+        };
+    });
+    var NoticeIntil = function () {
+        if ("@NoticeInfo.Id" != "")
+        {
+            noticeModel.Id = "@NoticeInfo.Id";
+            $("#txtNTheme").val(" @NoticeInfo.NTheme");
+            $("#txtNDate").val("@NoticeInfo.NDate");
+            $("#selNAddress").val(@NoticeInfo.NAddress);
+            $("#txrContent").val("@NoticeInfo.Content");
+            BindNoticeDocmentTable(noticeModel.Id);
+        }
+        else {
+            alert("无效数据！");
+            window.location.href = "@ReUrl";
+        }
+    }
+</script>
+
+
+
+

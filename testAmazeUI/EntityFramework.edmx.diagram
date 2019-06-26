@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="98a828412f8f4031a03533e9e0355de5" Name="Diagram1">
+        <EntityTypeShape EntityType="FUNDModel.tb_constant" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FUNDModel.tb_area" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_PRE" Width="1.5" PointX="9.375" PointY="4.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_Pro_PRE" Width="1.5" PointX="9.375" PointY="7.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_FileInfo" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_notice_docment" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_project_image" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_project_docment" Width="1.5" PointX="9.375" PointY="10.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_interview_record" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_project" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_notice" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_comment" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FUNDModel.tb_user" Width="1.5" PointX="11.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

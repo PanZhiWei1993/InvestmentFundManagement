@@ -1,0 +1,714 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -AISIDE</title>
+    <meta name="apple-mobile-web-app-title" content="AISIDE" />
+    <link rel="icon" type="image/png" href="~/res/assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="~/res/assets/i/app-icon72x72@2x.png">
+
+    <link rel="stylesheet" href="~/res/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="~/res/assets/css/amazeui.datatables.min.css" />
+    <link rel="stylesheet" href="~/res/assets/css/app.css">
+    <link href="~/WebUplaoder/webuploader.css" rel="stylesheet" />
+
+    <script src="~/res/assets/js/jquery.min.js"></script>
+    <script src="~/res/assets/js/theme.js"></script>
+    <script src="~/res/js/DateHepler.js"></script>
+    <script src="~/res/assets/js/echarts.min.js"></script>
+    <script src="~/res/js/ajax.Commen.js"></script>
+    <script src="~/res/js/ValidateHelper.js"></script>
+    <script src="~/res/js/TabelControll.js"></script>
+    <script src="~/WebUplaoder/webuploader.min.js"></script>
+    <script src="~/res/js/ModalControll.js"></script>
+    <script src="~/res/js/WebUploaderControll.js"></script>
+    <script src="~/res/js/StringHepler.js"></script>
+
+    @using testAmazeUI.Models;
+    @{
+
+        var loginUserInfo = ViewBag.userInfo as tb_user;
+        var userId = loginUserInfo.Id;
+    }
+
+    <script>
+        var BaseUrl = "http://172.18.4.205:8081";
+
+        var GetTableTh = function (id) {
+            var thList = new Array();
+            var ths = $("#" + id + ">thead>tr>th");
+            var th = "";
+            for (var i = 0; i < ths.length; i++) {
+                th = $(ths[i]).attr("data-bind");
+                if (th != "" && typeof (th) != "undefined") {
+                    thList.push(th);
+                }
+            }
+            return thList;
+        };
+        var GetNewProjectFileModel = function (options) {
+            var defValue = {
+                Id: "",
+                FileDesc: "",
+                DocmentTypeId: "",
+                ProPhaseId: "",
+                SortTime: "",
+                ProId: "",
+                FileId: ""
+            }
+            return $.extend(defValue, options);
+        };
+        var GetNewProjectTxteModel = function (options) {
+            var defValue = {
+                Id: "",
+                Area: "",
+                Subject: "",
+                SortTime: "",
+                InnerMan: "",
+                OuterMan: "",
+                Content: "",
+                FileID: "",
+                ProId: ""
+            };
+            return $.extend(defValue, options);
+        };
+        var GetNewProjectModel = function (options) {
+            var defValue = {
+                Id: "",
+                CompName: "",
+                ProName:"",
+                ProPhaseId: 1,
+                AreaId: 1,
+                ProManager: "",
+                ProWebUrl: "",
+                ProApp: "",
+                ProWeChat: "",
+                Originator: "",
+                OriginatorEmail: "",
+                OriginatorPhone: "",
+                Contact: "",
+                ContactEmail: "",
+                ContactPhone: "",
+                ProBrief: "",
+                InvestmentLogic: "",
+                InvestmentAmount: "",
+                FinancingScale:"",
+                ProImgs: new Array(),
+                ProPREs: new Array()
+            };
+            return $.extend(defValue, options);
+        };
+        var GetNewNoticeFileModel = function (options) {
+            var defValue = {
+                Id: "",
+                FileId: "",
+                FileDesc: "",
+                NoticeId: "",
+            };
+            return $.extend(defValue, options);
+        };
+        var GetNewNoticeModel = function (options) {
+            var defValue = {
+                Id: "",
+                NoticeNO: "",
+                NDate: "",
+                NTheme: "",
+                NAddress: -1,
+                Content: "",
+            };
+            return $.extend(defValue, options);
+        };
+        var GetNewCommentModel = function (options) {
+            var defValue = {
+                Account: "",
+                Content: "",
+                Id: "",
+                ProId: "",
+                Subject: "",
+                ProPhase: ""
+            };
+            return $.extend(defValue, options);
+        };
+
+
+  
+
+
+        $(document).ready(function () {
+            //点击更多出现更多条件框
+            $(".selMore").click(function () {
+                if ($(this).hasClass('open')) {
+                    $(this).removeClass('open');
+                    $(this).children('span:first').addClass('am-icon-toggle-off');
+                    $(this).children('span:first').removeClass('am-icon-toggle-on');
+                    $(".moreSleArea").addClass('hide');
+                }
+                else {
+                    $(this).addClass('open');
+                    $(this).children('span:first').addClass('am-icon-toggle-on');
+                    $(this).children('span:first').removeClass('am-icon-toggle-off');
+                    $(".moreSleArea").removeClass("hide");
+                }
+            });
+            $("#btn_SignOut").click(function () {
+                Logout();
+                return false;
+            });
+        });
+
+
+
+        function Logout() {
+             $.ajaxAction({
+                    url: '@Url.Content("~/Account/Logout")',
+                    success: function (result) {
+                        //var test = result;
+                        window.location.href =  "/Login";
+                    }
+                });
+        };
+    </script>
+
+
+</head>
+<body data-type="widgets">
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        <header>
+            <!-- logo -->
+            <div class="am-fl tpl-header-logo">
+                <a href="javascript:;"><img src="~/res/assets/img/logo.png" alt=""></a>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="tpl-header-fluid">
+                <!-- 侧边切换 -->
+                <div class="am-fl tpl-header-switch-button am-icon-list">
+                    <span>
+
+                    </span>
+                </div>
+                <!-- 搜索 -->
+                <div class="am-fl tpl-header-search">
+                    <form class="tpl-header-search-form" action="javascript:;">
+                        <button class="tpl-header-search-btn am-icon-search"></button>
+                        <input class="tpl-header-search-box" type="text" placeholder="搜索内容...">
+                    </form>
+                </div>
+                <!-- 其它功能-->
+                <div class="am-fr tpl-header-navbar">
+                    <ul>
+                        <!-- 欢迎语 -->
+                        <li class="am-text-sm tpl-header-navbar-welcome">
+                            <a href="javascript:;">欢迎你, <span class="userName">@loginUserInfo.UserName</span> </a>
+                        </li>
+
+                        <!-- 新邮件 -->
+                        <li class="am-dropdown tpl-dropdown" data-am-dropdown>
+                            <a href="javascript:;" class="am-dropdown-toggle tpl-dropdown-toggle" data-am-dropdown-toggle>
+                                <i class="am-icon-envelope"></i>
+                                <span class="am-badge am-badge-success am-round item-feed-badge">4</span>
+                            </a>
+                            <!-- 弹出列表 -->
+                            <ul class="am-dropdown-content tpl-dropdown-content">
+                                <li class="tpl-dropdown-menu-messages">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
+                                        <div class="menu-messages-ico">
+                                            <img src="~/res/assets/img/user04.png" alt="">
+                                        </div>
+                                        <div class="menu-messages-time">
+                                            3小时前
+                                        </div>
+                                        <div class="menu-messages-content">
+                                            <div class="menu-messages-content-title">
+                                                <i class="am-icon-circle-o am-text-success"></i>
+                                                <span>夕风色</span>
+                                            </div>
+                                            <div class="am-text-truncate"> Amaze UI 的诞生，依托于 GitHub 及其他技术社区上一些优秀的资源；Amaze UI 的成长，则离不开用户的支持。 </div>
+                                            <div class="menu-messages-content-time">2016-09-21 下午 16:40</div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="tpl-dropdown-menu-messages">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
+                                        <div class="menu-messages-ico">
+                                            <img src="~/res/assets/img/user02.png" alt="">
+                                        </div>
+                                        <div class="menu-messages-time">
+                                            5天前
+                                        </div>
+                                        <div class="menu-messages-content">
+                                            <div class="menu-messages-content-title">
+                                                <i class="am-icon-circle-o am-text-warning"></i>
+                                                <span>禁言小张</span>
+                                            </div>
+                                            <div class="am-text-truncate"> 为了能最准确的传达所描述的问题， 建议你在反馈时附上演示，方便我们理解。 </div>
+                                            <div class="menu-messages-content-time">2016-09-16 上午 09:23</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="tpl-dropdown-menu-messages">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
+                                        <i class="am-icon-circle-o"></i> 进入列表…
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 新提示 -->
+                        <li class="am-dropdown" data-am-dropdown>
+                            <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
+                                <i class="am-icon-bell"></i>
+                                <span class="am-badge am-badge-warning am-round item-feed-badge">5</span>
+                            </a>
+
+                            <!-- 弹出列表 -->
+                            <ul class="am-dropdown-content tpl-dropdown-content">
+                                <li class="tpl-dropdown-menu-notifications">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+                                        <div class="tpl-dropdown-menu-notifications-title">
+                                            <i class="am-icon-line-chart"></i>
+                                            <span> 有6笔新的销售订单</span>
+                                        </div>
+                                        <div class="tpl-dropdown-menu-notifications-time">
+                                            12分钟前
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="tpl-dropdown-menu-notifications">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+                                        <div class="tpl-dropdown-menu-notifications-title">
+                                            <i class="am-icon-star"></i>
+                                            <span> 有3个来自人事部的消息</span>
+                                        </div>
+                                        <div class="tpl-dropdown-menu-notifications-time">
+                                            30分钟前
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="tpl-dropdown-menu-notifications">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+                                        <div class="tpl-dropdown-menu-notifications-title">
+                                            <i class="am-icon-folder-o"></i>
+                                            <span> 上午开会记录存档</span>
+                                        </div>
+                                        <div class="tpl-dropdown-menu-notifications-time">
+                                            1天前
+                                        </div>
+                                    </a>
+                                </li>
+
+
+                                <li class="tpl-dropdown-menu-notifications">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+                                        <i class="am-icon-bell"></i> 进入列表…
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 退出 -->
+                        <li class="am-text-sm">
+                            <a id="btn_SignOut" href="javascript:">
+                                <span class="am-icon-sign-out"></span> 退出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </header>
+        <!-- 风格切换 -->
+        <div class="tpl-skiner">
+            <div class="tpl-skiner-toggle am-icon-cog">
+            </div>
+            <div class="tpl-skiner-content">
+                <div class="tpl-skiner-content-title">
+                    选择主题
+                </div>
+                <div class="tpl-skiner-content-bar">
+                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 侧边导航栏 -->
+        <div class="left-sidebar">
+            <!-- 用户信息 -->
+            <div class="tpl-sidebar-user-panel">
+                <div class="tpl-user-panel-slide-toggleable">
+                    <div class="tpl-user-panel-profile-picture">
+                        <img src="~/res/assets/img/user04.png" alt="">
+                    </div>
+                    <span class="user-panel-logged-in-text">
+                        <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+                        <span class="userName">@loginUserInfo.UserName</span>
+                    </span>
+                    <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>
+                </div>
+            </div>
+            <!-- 菜单 -->
+            <div data-am-sticky>
+                <ul class="sidebar-nav">
+                    @*<li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>*@
+                    <li class="sidebar-nav-link">
+                        <a href="@Url.Content("/Home/Index")">
+                            <i class="am-icon-home sidebar-nav-link-logo"></i> 主页
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-link">
+                        <a href="@Url.Content("/Notice/Index")">
+                            <i class="am-icon-table sidebar-nav-link-logo"></i> 投资人公告
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-link">
+                        <a href="javascript:;" class="sidebar-nav-sub-title">
+                            <i class="am-icon-table sidebar-nav-link-logo"></i> 投资项目管理
+                            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                        </a>
+                        <ul class="sidebar-nav sidebar-nav-sub">
+                            <li class="sidebar-nav-link">
+                                <a href="@Url.Content("/ProjectManege/CastProjectView")">
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 已投项目
+                                </a>
+                            </li>
+
+                            <li class="sidebar-nav-link">
+                                <a href="@Url.Content("/ProjectManege/ObservationProjectView")">
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 待观察项目
+                                </a>
+                            </li>
+
+                            <li class="sidebar-nav-link">
+                                <a href="@Url.Content("/ProjectManege/NotAdvanceView")">
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 暂不推进项目
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-link">
+                                <a href="@Url.Content("/ProjectManege/NotAdvanceView")">
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 融资项目
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a href="@Url.Content("/Report/ReportView")">
+                            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 统计报告
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-link">
+                        <a href="javascript:;" class="sidebar-nav-sub-title">
+                            <i class="am-icon-table sidebar-nav-link-logo"></i> 系统设定
+                            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                        </a>
+                        <ul class="sidebar-nav sidebar-nav-sub">
+                            <li class="sidebar-nav-link">
+                                <a href="@Url.Content("/UserManege/UserInfoView")">
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span>个人信息
+                                </a>
+                            </li>
+
+                            <li class="sidebar-nav-link">
+                                <a href="@Url.Content("/UserManege/ChangePassWord")">
+                                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 修改密码
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @{
+                        if (loginUserInfo.Utype == 0)
+                        {
+                            <li class="sidebar-nav-heading"><span class=" am-text-lg am-text-secondary"> 管理员界面</span></li>
+                            <li class="sidebar-nav-link">
+                                <a href="javascript:;" class="sidebar-nav-sub-title">
+                                    <i class="am-icon-table sidebar-nav-link-logo"></i> 用户模块
+                                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                </a>
+                                <ul class="sidebar-nav sidebar-nav-sub">
+                                    <li class="sidebar-nav-link">
+                                        <a href="@Url.Content("/UserManege/UserManegeView")" class="sidebar-nav-sub-title">
+                                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 用户管理
+
+                                        </a>
+                                        @*<ul class="sidebar-nav sidebar-nav-sub">
+                                          <li class="sidebar-nav-link">
+                                              <a href="@Url.Content("/Account/AddUserView")">
+                                                  <span class="am-icon-angle-right am-margin-right-sm sidebar-nav-link-logo"></span> 添加用户
+                                              </a>
+
+                                          </li>
+                                        </ul>*@
+                                    </li>
+                                    <li class="sidebar-nav-link">
+                                        <a href="@Url.Content("/UserManege/AddUserView")">
+                                            <span class="am-icon-angle-right am-margin-right-sm sidebar-nav-link-logo"></span> 添加用户
+                                        </a>
+
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="sidebar-nav-link">
+                                <a href="javascript:;" class="sidebar-nav-sub-title">
+                                    <span class="am-icon-table sidebar-nav-link-logo"></span> 项目管理
+                                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                </a>
+                                <ul class="sidebar-nav sidebar-nav-sub">
+                                    <li class="sidebar-nav-link">
+                                        <a href="@Url.Content("/ProjectManege/CreateProjectView")">
+                                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加投资项目
+                                        </a>
+
+                                    </li>
+                                    <li class="sidebar-nav-link">
+                                        <a href="@Url.Content("/Notice/AppendNoticeView")">
+                                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 发布公告
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+        </div>
+
+        @*confirm模态框*@
+        <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+            <div class="am-modal-dialog">
+                <div class="am-modal-hd">Amaze UI</div>
+                <div class="am-modal-bd">
+                    你，确定要删除这条记录吗？
+                </div>
+                <div class="am-modal-footer">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                </div>
+            </div>
+        </div>
+        @*alert模态框*@
+        <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+            <div class="am-modal-dialog">
+                <div class="am-modal-hd">警告</div>
+                <div class="am-modal-bd">
+
+                </div>
+                <div class="am-modal-footer">
+                    <span class="am-modal-btn">确定</span>
+                </div>
+            </div>
+        </div>
+        @*添加访谈纪要模态框*@
+        <div class="am-modal am-modal-prompt" tabindex="-1" id="modal_addProjectTxte">
+            <div class="am-modal-dialog " style="width:700px;height:600px;border:2px solid #808080;">
+                <div class="am-modal-hd " style="border-bottom: 1px solid #dedede;">
+                    <span style="font-size:25px;font-weight:600">访&nbsp;&nbsp;谈&nbsp;&nbsp;纪&nbsp;&nbsp;要</span>
+                    <a href="javascript: void(0)" class="am-close am-close-spin " data-am-modal-close>&times;</a>
+                </div>
+                <div class="am-modal-bd" style="height:470px">
+                    <form class="am-form tpl-form-border-form tpl-form-border-br  am-u-lg-12 am-u-md-12 " style="height:100%;padding-bottom:0px;margin-bottom:0px">
+                        <div class="am-form-group" style="height:100%;margin-bottom:0px !important">
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 " style="padding-bottom:10px;">
+                                <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题</span>
+                                <input id="inp_mod_Subject" type="text" class="am-form-field" required placeholder="">
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 " style="padding-bottom:10px;">
+                                <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点</span>
+                                <input id="inp_mod_Area" type="text" class="am-form-field" placeholder="">
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 " style="padding-bottom:10px;">
+                                <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间</span>
+                                <input id="inp_mod_SortTime" type="text" class="am-form-field" data-am-datepicker readonly placeholder="">
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 " style="padding-bottom:10px;">
+                                <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">内部人员</span>
+                                <input id="inp_mod_InnerMan" type="text" class="am-form-field" placeholder="">
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 " style="padding-bottom:10px;">
+                                <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">外部人员</span>
+                                <input id="inp_mod_OuterMan" type="text" class="am-form-field" placeholder="">
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg-lg">
+                                    <span class="am-input-group-label am-padding-horizontal-xl ">内&nbsp;&nbsp;&nbsp;容</span>
+                                    <textarea class="am-scrollable-vertical" rows="8" id="inp_mod_Content" placeholder="请输入文章内容"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="am-modal-footer" style="width:100%;height:50px;">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                </div>
+            </div>
+        </div>
+
+        @*添加项目文档模态框*@
+        <div class="am-modal am-modal-prompt" tabindex="-1" id="modal_addProjectFile">
+            <div class="am-modal-dialog " style="width:600px;height:500px;border:2px solid #808080;">
+                <div class="am-modal-hd " style="border-bottom: 1px solid #dedede;">
+                    <span style="font-size:25px;font-weight:600">项&nbsp;&nbsp;目&nbsp;&nbsp;文&nbsp;&nbsp;档</span>
+                    <a href="javascript: void(0)" class="am-close am-close-spin " data-am-modal-close>&times;</a>
+                </div>
+                <div class="am-modal-bd" style="height:370px">
+                    <form class="am-form tpl-form-border-form tpl-form-border-br  am-u-lg-12 am-u-md-12 " style="height:100%;padding-bottom:0px;margin-bottom:0px">
+                        <div class="am-form-group" style="height:100%;margin-bottom:0px !important">
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg">
+                                <span class="am-input-group-label  am-padding-horizontal-lg">文件类型</span>
+                                <select id="selBtn_moP_PjTextType" data-am-selected="{searchBox: 0}" class="am-form-field  mySpanSelect" style="display: none;">
+                                    @{Html.RenderAction("GetSelectBtn_PjTextType", "Constant");}
+                                </select>
+                            </div>
+
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg">
+                                <span class="am-input-group-label  am-padding-horizontal-lg">项目阶段</span>
+                                <select id="selBtn_moP_PjRank" data-am-selected="{searchBox: 0}" class="am-form-field  mySpanSelect" style="display: none;">
+                                    @Html.Action("GetSelectBtn_PjRank", "Constant");
+                                </select>
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg">
+                                <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">文件描述</span>
+                                <input id="inp_moP_FileDesc" type="text" class="am-form-field" placeholder="">
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg">
+                                <span class="am-input-group-label am-padding-horizontal-lg " style="min-width:114px">选择文件</span>
+                                <input id="inp_ProFlieName" type="text" class="am-form-field am-u-lg-5 am-u-md-5 am-u-sm-5" placeholder="">
+                                <div id="btn_moP_FileUp">
+                                    @*<button  type="button" class="am-btn am-btn-danger am-btn-sm">
+                                        <i class="am-icon-cloud-upload"></i> 浏览
+                                    </button>
+                                    <input id="doc-form-file" type="file" multiple>*@
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="am-modal-footer" style="width:100%;height:50px;">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                </div>
+            </div>
+        </div>
+
+        @*添加公告文档模态框*@
+        <div class="am-modal am-modal-prompt" tabindex="-1" id="modal_addNoticeFile">
+            <div class="am-modal-dialog " style="width:600px;height:500px;border:2px solid #808080;">
+                <div class="am-modal-hd " style="border-bottom: 1px solid #dedede;">
+                    <span style="font-size:25px;font-weight:600">公&nbsp;&nbsp;告&nbsp;&nbsp;文&nbsp;&nbsp;件</span>
+                    <a href="javascript: void(0)" class="am-close am-close-spin " data-am-modal-close>&times;</a>
+                </div>
+                <div class="am-modal-bd" style="height:370px">
+                    <form class="am-form tpl-form-border-form tpl-form-border-br  am-u-lg-12 am-u-md-12 " style="height:100%;padding-bottom:0px;margin-bottom:0px">
+                        <div class="am-form-group" style="height:100%;margin-bottom:0px !important">
+                            <div class="am-form-group">
+                                <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg-lg">
+                                    <span class="am-input-group-label am-padding-horizontal-lg ">文件描述</span>
+                                    <textarea class="am-scrollable-vertical" rows="10" id="tr_mo_NoticeFileRemark" placeholder="请输入文件描述"></textarea>
+                                </div>
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12">
+                                <span class="am-input-group-label am-padding-horizontal-lg ">选择文件</span>
+                                <input id="inp_upNoticeFileName" type="text" class="am-form-field am-u-lg-5 am-u-md-5 am-u-sm-5" placeholder="点击上传文件">
+                                <span class="am-input-group-label" id="uBtn_NoticeFile"> <i class="am-icon-cloud-upload"></i> 浏览</span>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="am-modal-footer" style="width:100%;height:50px;">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                </div>
+            </div>
+        </div>
+
+        @*添加项目点评模态框*@
+        <div class="am-modal am-modal-prompt" tabindex="-1" id="modal_Comment">
+            <div class="am-modal-dialog " style="width:600px;height:500px;border:2px solid #808080;">
+                <div class="am-modal-hd " style="border-bottom: 1px solid #dedede;">
+                    <span style="font-size:25px;font-weight:600">项&nbsp;&nbsp;目&nbsp;&nbsp;点&nbsp;&nbsp;评</span>
+                    <a href="javascript: void(0)" class="am-close am-close-spin " data-am-modal-close>&times;</a>
+                </div>
+                <div class="am-modal-bd" style="height:370px">
+                    <form class="am-form tpl-form-border-form tpl-form-border-br  am-u-lg-12 am-u-md-12 " style="height:100%;padding-bottom:0px;margin-bottom:0px">
+                        <div class="am-form-group" style="height:100%;margin-bottom:0px !important">
+                            <div class="am-form-group">
+                                <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12">
+                                    <span class="am-input-group-label am-padding-horizontal-lg ">点评标题</span>
+                                    <input id="inp_mo_CommentSubject" type="text" class="am-form-field am-u-lg-5 am-u-md-5 am-u-sm-5" placeholder="">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+
+                                <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg">
+                                    <span class="am-input-group-label am-padding-horizontal-lg ">点评内容</span>
+                                    <textarea class="am-scrollable-vertical" rows="10" id="tr_mo_CommentContent" placeholder=""></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="am-modal-footer" style="width:100%;height:50px;">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                </div>
+            </div>
+        </div>
+
+        @*修改用户信息*@
+        <div class="am-modal am-modal-prompt" tabindex="-1" id="modal_ChangeUserInfo">
+            <div class="am-modal-dialog " style="width:600px;height:470px;border:2px solid #808080;">
+                <div class="am-modal-hd " style="border-bottom: 1px solid #dedede;">
+                    <span style="font-size:25px;font-weight:600">修&nbsp;改&nbsp;用&nbsp;户&nbsp;信&nbsp;息</span>
+                    <a href="javascript: void(0)" class="am-close am-close-spin " data-am-modal-close>&times;</a>
+                </div>
+                <div class="am-modal-bd" style="height:350px">
+                    <form class="am-form tpl-form-border-form tpl-form-border-br  am-u-lg-12 am-u-md-12 " style="height:100%;padding-bottom:0px;margin-bottom:0px">
+                        <div class="am-form-group" style="height:100%;margin-bottom:0px !important">
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12" style="padding-bottom:10px;">
+                                <span class="am-input-group-label am-padding-horizontal-lg">手&nbsp;&nbsp;机</span>
+                                <input id="inp_mod_UserPhone" type="text" class="am-form-field" required placeholder="">
+                            </div>
+                            <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12" style="padding-bottom:10px;">
+                                <span class="am-input-group-label am-padding-horizontal-lg ">邮&nbsp;&nbsp;箱</span>
+                                <input id="inp_mod_UserEmail" type="text" class="am-form-field" placeholder="">
+                            </div>
+                            <div id="userRoleRow" class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12" style="padding-bottom:10px;">
+                                <span class="am-input-group-label ">用户权限</span>
+                                <select id="sel_mod_UserRole1" data-am-selected="{searchBox: 0}" class="am-form-field am-u-sm-8 mySpanSelect" style="display: none;">
+                                    <option value="1">一般用户</option>
+                                    <option value="0">管理员</option>
+                                </select>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-input-group am-u-lg-12 am-u-md-12 am-u-sm-12 am-margin-bottom-lg">
+                                    <span class="am-input-group-label am-padding-horizontal-lg ">留&nbsp;&nbsp;言</span>
+                                    <textarea id="inp_mod_LMessage" class="am-scrollable-vertical" rows="8" placeholder="可以随意写什么"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="am-modal-footer" style="width:100%;height:50px;">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                </div>
+            </div>
+           
+        </div>
+
+        @RenderBody()
+
+        <script src="~/res/assets/js/amazeui.min.js"></script>
+        <script src="~/res/assets/js/amazeui.datatables.min.js"></script>
+        <script src="~/res/assets/js/dataTables.responsive.min.js"></script>
+        <script src="~/res/assets/js/app.js"></script>
+    </div>
+</body>
+</html>

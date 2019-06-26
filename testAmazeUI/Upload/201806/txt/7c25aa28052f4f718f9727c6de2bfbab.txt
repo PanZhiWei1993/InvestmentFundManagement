@@ -1,0 +1,19 @@
+  #region ##页面初始化##
+  #endregion
+  #region ##页面接口##
+  #endregion
+  #region ##私有方法##
+  #endregion
+
+
+
+        #region ##查询##
+        #endregion
+        #region ##新增##
+        #endregion
+        #region ##修改##
+        #endregion
+        #region ##删除##
+        #endregion
+        #region ##私有方法##
+        #endregion
